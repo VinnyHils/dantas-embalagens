@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight, Play } from 'lucide-react';
-import sacoFundoBranco from "../assets/images/product-bag.jpg";
+import sacoFundoBranco from "../assets/images/saquinho-fundo-transparente-pequeno.png";
 import sacoCinema from "../assets/images/hero-bag.jpg";
 import sacoFesta from "../assets/images/saco-festa.jpg";
 import sacoChurros from "../assets/images/elegant-bag.jpg";

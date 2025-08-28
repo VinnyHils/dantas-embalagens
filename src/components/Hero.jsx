@@ -163,7 +163,7 @@ const Hero = () => {
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.6, delay: 0.8 }}
-                className="absolute -top-4 -right-4 bg-green-500 text-white px-4 py-2 rounded-full font-bold text-sm shadow-lg"
+                className="absolute -top-4 right-4 bg-green-500 text-white px-4 py-2 rounded-full font-bold text-sm shadow-lg"
               >
                 ✓ Frete Grátis
               </motion.div>
@@ -173,7 +173,7 @@ const Hero = () => {
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.6, delay: 1 }}
-                className="absolute -bottom-4 -left-4 bg-orange-600 text-white px-4 py-2 rounded-full font-bold text-sm shadow-lg"
+                className="absolute -bottom-4 left-4 bg-orange-600 text-white px-4 py-2 rounded-full font-bold text-sm shadow-lg"
               >
                 Alta Qualidade
               </motion.div>

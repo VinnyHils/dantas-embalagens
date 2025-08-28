@@ -5,6 +5,7 @@ import productBag from '../assets/images/product-bag.jpg';
 import galleryBags from '../assets/images/gallery-bags.jpg';
 import elegantBag from '../assets/images/elegant-bag.jpg';
 import heroBag from '../assets/images/hero-bag.jpg';
+import comercioImage from '../assets/images/saco-fundo-branco.png';
 
 const Products = () => {
   const [selectedImage, setSelectedImage] = useState(0);
@@ -58,14 +59,14 @@ const Products = () => {
           </p>
         </motion.div>
 
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start max-w-7xl mx-auto">
           {/* Image Gallery */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
-            className="space-y-4 lg:sticky lg:top-24"
+            className="lg:col-span-6 space-y-4 lg:sticky lg:top-24"
           >
             {/* Main Image */}
             <div className="relative group">
@@ -76,17 +77,27 @@ const Products = () => {
                 transition={{ duration: 0.5 }}
                 src={images[selectedImage].src}
                 alt={images[selectedImage].alt}
-                className="w-full h-96 md:h-[600px] object-cover rounded-2xl shadow-2xl"
+                className="w-full h-140 md:h-[900px] object-cover rounded-2xl shadow-2xl"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent rounded-2xl" />
               
               {/* Badges */}
-              <div className="absolute top-2 right-2 md:top-8 md:right-8 bg-green-500 text-white px-3 py-1 rounded-full text-sm font-bold flex items-center shadow-md">
-                <Check className="w-4 h-4 mr-1" /> Frete Grátis
-              </div>
-              <div className="absolute bottom-2 left-2 md:bottom-8 md:left-8 bg-orange-600 text-white px-3 py-1 rounded-full text-sm font-bold shadow-md">
+              <motion.div
+                initial={{ scale: 0, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ delay: 0.8, type: 'spring', stiffness: 200 }}
+                className="absolute top-4 right-0 bg-green-500 text-white px-4 py-2 rounded-full text-sm font-bold flex items-center shadow-lg"
+              >
+                <Check className="w-4 h-4 mr-2" /> Frete Grátis
+              </motion.div>
+              <motion.div
+                initial={{ scale: 0, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ delay: 1, type: 'spring', stiffness: 200 }}
+                className="absolute bottom-4 left-0 bg-orange-600 text-white px-4 py-2 rounded-full text-sm font-bold shadow-lg"
+              >
                 Alta Qualidade
-              </div>
+              </motion.div>
             </div>
 
             {/* Thumbnails */}
@@ -106,7 +117,7 @@ const Products = () => {
                   <img
                     src={image.src}
                     alt={image.alt}
-                    className="w-full h-20 object-cover"
+                    className="w-full h-24 object-cover"
                   />
                   {selectedImage === index && (
                     <motion.div
@@ -125,7 +136,7 @@ const Products = () => {
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
-            className="space-y-8"
+            className="lg:col-span-6 space-y-8"
           >
             {/* Price and Rating */}
             <div>
