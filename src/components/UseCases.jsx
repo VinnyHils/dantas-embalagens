@@ -159,17 +159,6 @@ const UseCases = () => {
                       className="w-full h-96 lg:h-[500px] object-cover group-hover:scale-105 transition-transform duration-700"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
-                    
-                    {/* Play Button Overlay */}
-                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      <motion.button
-                        whileHover={{ scale: 1.1 }}
-                        whileTap={{ scale: 0.9 }}
-                        className="w-16 h-16 bg-white/90 rounded-full flex items-center justify-center shadow-lg"
-                      >
-                        <Play className="w-6 h-6 text-orange-600 ml-1" />
-                      </motion.button>
-                    </div>
                   </div>
                 </motion.div>
               </motion.div>

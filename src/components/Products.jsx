@@ -65,7 +65,7 @@ const Products = () => {
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
-            className="space-y-4"
+            className="space-y-4 lg:sticky lg:top-24"
           >
             {/* Main Image */}
             <div className="relative group">
@@ -76,13 +76,16 @@ const Products = () => {
                 transition={{ duration: 0.5 }}
                 src={images[selectedImage].src}
                 alt={images[selectedImage].alt}
-                className="w-full h-[calc(100vw*16/9)] lg:h-[600px] object-cover rounded-2xl shadow-2xl"
+                className="w-full h-96 md:h-[600px] object-cover rounded-2xl shadow-2xl"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent rounded-2xl" />
               
-              {/* Quality Badge */}
-              <div className="absolute top-4 left-4 bg-green-500 text-white px-3 py-1 rounded-full text-sm font-bold">
-                ✓ Alta Qualidade
+              {/* Badges */}
+              <div className="absolute top-2 right-2 md:top-8 md:right-8 bg-green-500 text-white px-3 py-1 rounded-full text-sm font-bold flex items-center shadow-md">
+                <Check className="w-4 h-4 mr-1" /> Frete Grátis
+              </div>
+              <div className="absolute bottom-2 left-2 md:bottom-8 md:left-8 bg-orange-600 text-white px-3 py-1 rounded-full text-sm font-bold shadow-md">
+                Alta Qualidade
               </div>
             </div>
 

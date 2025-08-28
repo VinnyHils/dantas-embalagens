@@ -148,14 +148,14 @@ const Hero = () => {
               <motion.div
                 animate={{ rotate: [0, 5, 0] }}
                 transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-                className="relative overflow-hidden rounded-3xl shadow-2xl"
+                className="relative"
               >
                 <img
                   src={heroBag}
                   alt="Saco de Papel Multiuso 20cm"
                   className="w-full h-96 lg:h-[600px] object-contain group-hover:scale-105 transition-transform duration-700"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+                <div className="absolute inset-0" />
               </motion.div>
 
               {/* Floating Badge */}
