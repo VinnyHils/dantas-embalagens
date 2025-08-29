@@ -1,8 +1,8 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, Star, ShoppingCart, Zap } from 'lucide-react';
-import heroBag from '../assets/images/hero-bag.png';
-import floatingBag from '../assets/images/saco-fundo-branco.png';
+import heroBag from '../assets/images/hero-bag.webp';
+import floatingBag from '../assets/images/saco-fundo-branco.webp';
 
 const Hero = () => {
   const scrollToSection = (sectionId) => {

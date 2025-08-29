@@ -1,41 +1,35 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
 import { Mail, Phone, MapPin, Clock, Send, CheckCircle, AlertCircle } from 'lucide-react';
 
+const contactSchema = z.object({
+  name: z.string().min(3, { message: "O nome deve ter pelo menos 3 caracteres." }),
+  email: z.string().email({ message: "Por favor, insira um e-mail válido." }),
+  phone: z.string().optional(),
+  subject: z.string().min(1, { message: "Por favor, selecione um assunto." }),
+  message: z.string().min(10, { message: "A mensagem deve ter pelo menos 10 caracteres." }),
+});
+
 const Contact = () => {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    subject: '',
-    message: ''
-  });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState(null);
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
-  };
+  const { register, handleSubmit, formState: { errors }, reset } = useForm({
+    resolver: zodResolver(contactSchema),
+  });
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const onSubmit = async (data) => {
     setIsSubmitting(true);
+    console.log(data);
     
     // Simulate form submission
     setTimeout(() => {
       setIsSubmitting(false);
       setSubmitStatus('success');
-      setFormData({
-        name: '',
-        email: '',
-        phone: '',
-        subject: '',
-        message: ''
-      });
+      reset();
       
       // Reset status after 5 seconds
       setTimeout(() => setSubmitStatus(null), 5000);
@@ -181,7 +175,7 @@ const Contact = () => {
               </motion.div>
             )}
 
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div>
                   <label htmlFor="name" className="block text-sm font-medium text-slate-700 mb-2">
@@ -190,13 +184,11 @@ const Contact = () => {
                   <input
                     type="text"
                     id="name"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleInputChange}
-                    required
-                    className="w-full px-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-300"
+                    {...register("name")}
+                    className={`w-full px-4 py-3 border rounded-xl focus:ring-2 focus:border-transparent transition-all duration-300 ${errors.name ? 'border-red-500 focus:ring-red-500' : 'border-slate-300 focus:ring-orange-500'}`}
                     placeholder="Seu nome completo"
                   />
+                  {errors.name && <p className="text-red-600 text-sm mt-1">{errors.name.message}</p>}
                 </div>
 
                 <div>
@@ -206,13 +198,11 @@ const Contact = () => {
                   <input
                     type="email"
                     id="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    required
-                    className="w-full px-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-300"
+                    {...register("email")}
+                    className={`w-full px-4 py-3 border rounded-xl focus:ring-2 focus:border-transparent transition-all duration-300 ${errors.email ? 'border-red-500 focus:ring-red-500' : 'border-slate-300 focus:ring-orange-500'}`}
                     placeholder="seu@email.com"
                   />
+                  {errors.email && <p className="text-red-600 text-sm mt-1">{errors.email.message}</p>}
                 </div>
               </div>
 
@@ -224,9 +214,7 @@ const Contact = () => {
                   <input
                     type="tel"
                     id="phone"
-                    name="phone"
-                    value={formData.phone}
-                    onChange={handleInputChange}
+                    {...register("phone")}
                     className="w-full px-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-300"
                     placeholder="(11) 99999-9999"
                   />
@@ -238,17 +226,15 @@ const Contact = () => {
                   </label>
                   <select
                     id="subject"
-                    name="subject"
-                    value={formData.subject}
-                    onChange={handleInputChange}
-                    required
-                    className="w-full px-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-300"
+                    {...register("subject")}
+                    className={`w-full px-4 py-3 border rounded-xl focus:ring-2 focus:border-transparent transition-all duration-300 ${errors.subject ? 'border-red-500 focus:ring-red-500' : 'border-slate-300 focus:ring-orange-500'}`}
                   >
                     <option value="">Selecione um assunto</option>
                     {subjects.map((subject, index) => (
                       <option key={index} value={subject}>{subject}</option>
                     ))}
                   </select>
+                  {errors.subject && <p className="text-red-600 text-sm mt-1">{errors.subject.message}</p>}
                 </div>
               </div>
 
@@ -258,14 +244,12 @@ const Contact = () => {
                 </label>
                 <textarea
                   id="message"
-                  name="message"
-                  value={formData.message}
-                  onChange={handleInputChange}
-                  required
                   rows={5}
-                  className="w-full px-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-300 resize-none"
+                  {...register("message")}
+                  className={`w-full px-4 py-3 border rounded-xl focus:ring-2 focus:border-transparent transition-all duration-300 resize-none ${errors.message ? 'border-red-500 focus:ring-red-500' : 'border-slate-300 focus:ring-orange-500'}`}
                   placeholder="Descreva sua necessidade, quantidade desejada, prazo de entrega, etc."
                 />
+                {errors.message && <p className="text-red-600 text-sm mt-1">{errors.message.message}</p>}
               </div>
 
               <motion.button
@@ -304,4 +288,3 @@ const Contact = () => {
 };
 
 export default Contact;
-

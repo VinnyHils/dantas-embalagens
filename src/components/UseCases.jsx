@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronLeft, ChevronRight, Play } from 'lucide-react';
-import sacoFundoBranco from "../assets/images/saquinho-fundo-transparente-pequeno.png";
-import sacoCinema from "../assets/images/hero-bag.jpg";
-import sacoFesta from "../assets/images/saco-festa.jpg";
-import sacoChurros from "../assets/images/elegant-bag.jpg";
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+import sacoFundoBranco from "../assets/images/saquinho-fundo-transparente-pequeno.webp";
+import sacoCinema from "../assets/images/hero-bag.webp";
+import sacoFesta from "../assets/images/saco-festa.webp";
+import sacoChurros from "../assets/images/elegant-bag.webp";
 
 const UseCases = () => {
   const [activeCase, setActiveCase] = useState(0);
@@ -12,6 +12,7 @@ const UseCases = () => {
   const useCases = [
     {
       id: 'cinema',
+      tabLabel: 'Cinemas',
       title: 'Perfeito para Cinemas e Lanchonetes',
       description: 'Apresente suas pipocas, batatas e outros lanches de forma profissional. Nosso saquinho é a escolha ideal para quem busca qualidade e praticidade no atendimento.',
       image: sacoCinema,
@@ -19,6 +20,7 @@ const UseCases = () => {
     },
     {
       id: 'festa',
+      tabLabel: 'Festas',
       title: 'A Estrela da Sua Festa',
       description: 'Use nossos saquinhos para servir doces, salgados ou como lembrancinhas criativas. Eles são perfeitos para aniversários, festas juninas e qualquer celebração.',
       image: sacoFesta,
@@ -26,6 +28,7 @@ const UseCases = () => {
     },
     {
       id: 'food-truck',
+      tabLabel: 'Food Trucks',
       title: 'Ideal para Food Trucks',
       description: 'Seja para churros, pipoca ou outros alimentos, nosso saquinho é resistente e prático, valorizando seu produto e facilitando a vida de quem vende na rua.',
       image: sacoChurros,
@@ -33,6 +36,7 @@ const UseCases = () => {
     },
     {
       id: 'comercio',
+      tabLabel: 'Comércio',
       title: 'Comércio em Geral',
       description: 'Versátil para qualquer tipo de negócio. Desde pequenos comércios até grandes estabelecimentos, nosso saco de papel se adapta às suas necessidades.',
       image: sacoFundoBranco,
@@ -73,21 +77,27 @@ const UseCases = () => {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
             viewport={{ once: true }}
-            className="flex flex-wrap justify-center gap-2 sm:gap-4 mb-12"
+            className="flex flex-wrap justify-center gap-4 sm:gap-8 mb-12 border-b border-slate-200"
           >
             {useCases.map((useCase, index) => (
               <motion.button
                 key={useCase.id}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
                 onClick={() => setActiveCase(index)}
-                className={`px-4 sm:px-6 py-3 rounded-full font-semibold transition-all duration-300 ${
+                className={`relative px-3 py-4 text-lg font-semibold transition-colors duration-300 focus:outline-none ${
                   activeCase === index
-                    ? 'bg-orange-600 text-white shadow-lg'
-                    : 'bg-white text-slate-600 hover:bg-orange-50 hover:text-orange-600 border border-slate-200'
+                    ? 'text-orange-600'
+                    : 'text-slate-500 hover:text-orange-500'
                 }`}
               >
-                {useCase.title.split(' ')[0]} {useCase.title.split(' ')[1]}
+                {useCase.tabLabel}
+                {activeCase === index && (
+                  <motion.div
+                    layoutId="active-use-case-underline"
+                    className="absolute bottom-0 left-0 right-0 h-1 bg-orange-600"
+                    initial={false}
+                    transition={{ type: 'spring', stiffness: 300, damping: 25 }}
+                  />
+                )}
               </motion.button>
             ))}
           </motion.div>
@@ -166,19 +176,21 @@ const UseCases = () => {
 
             {/* Navigation Arrows */}
             <motion.button
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
+              whileHover={{ scale: 1.06 }}
+              whileTap={{ scale: 0.92 }}
               onClick={prevCase}
-              className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white shadow-lg rounded-full flex items-center justify-center text-slate-600 hover:text-orange-600 transition-colors duration-300 z-10"
+              aria-label="Anterior"
+              className="absolute left-4 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full flex items-center justify-center text-slate-600 hover:text-orange-600 transition-all duration-300 z-10 bg-white/5 backdrop-blur-[1px] border border-white/15 shadow-md hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-orange-400/40 dark:bg-white/5/50 dark:border-white/10 dark:hover:bg-white/10"
             >
               <ChevronLeft className="w-6 h-6" />
             </motion.button>
 
             <motion.button
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
+              whileHover={{ scale: 1.06 }}
+              whileTap={{ scale: 0.92 }}
               onClick={nextCase}
-              className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white shadow-lg rounded-full flex items-center justify-center text-slate-600 hover:text-orange-600 transition-colors duration-300 z-10"
+              aria-label="Próximo"
+              className="absolute right-4 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full flex items-center justify-center text-slate-600 hover:text-orange-600 transition-all duration-300 z-10 bg-white/5 backdrop-blur-[1px] border border-white/15 shadow-md hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-orange-400/40 dark:bg-white/5/50 dark:border-white/10 dark:hover:bg-white/10"
             >
               <ChevronRight className="w-6 h-6" />
             </motion.button>

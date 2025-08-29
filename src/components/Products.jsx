@@ -1,14 +1,55 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
-import { Check, ShoppingCart, Star, Zap, Shield, Truck, Package, Award } from 'lucide-react';
-import productBag from '../assets/images/product-bag.jpg';
-import galleryBags from '../assets/images/gallery-bags.jpg';
-import elegantBag from '../assets/images/elegant-bag.jpg';
-import heroBag from '../assets/images/hero-bag.jpg';
-import comercioImage from '../assets/images/saco-fundo-branco.png';
+import useEmblaCarousel from 'embla-carousel-react';
+import { Check, ShoppingCart, Star, Zap, Shield, Package } from 'lucide-react';
+import productBag from '../assets/images/product-bag.webp';
+import galleryBags from '../assets/images/gallery-bags.webp';
+import elegantBag from '../assets/images/elegant-bag.webp';
+import heroBag from '../assets/images/hero-bag.webp';
+
+const Thumb = ({ selected, onClick, imgSrc, altText }) => (
+  <div
+    className={`embla-thumbs__slide ${selected ? 'embla-thumbs__slide--selected' : ''}`}
+  >
+    <button
+      onClick={onClick}
+      className="embla-thumbs__slide__button"
+      type="button"
+    >
+      <img
+        className="embla-thumbs__slide__img"
+        src={imgSrc}
+        alt={altText}
+      />
+    </button>
+  </div>
+);
 
 const Products = () => {
-  const [selectedImage, setSelectedImage] = useState(0);
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true });
+  const [emblaThumbsRef, emblaThumbsApi] = useEmblaCarousel({
+    containScroll: 'keepSnaps',
+    dragFree: true,
+  });
+
+  const onThumbClick = useCallback((index) => {
+    if (!emblaApi || !emblaThumbsApi) return;
+    emblaApi.scrollTo(index);
+  }, [emblaApi, emblaThumbsApi]);
+
+  const onSelect = useCallback(() => {
+    if (!emblaApi || !emblaThumbsApi) return;
+    setSelectedIndex(emblaApi.selectedScrollSnap());
+    emblaThumbsApi.scrollTo(emblaApi.selectedScrollSnap());
+  }, [emblaApi, emblaThumbsApi, setSelectedIndex]);
+
+  useEffect(() => {
+    if (!emblaApi) return;
+    onSelect();
+    emblaApi.on('select', onSelect);
+    emblaApi.on('reInit', onSelect);
+  }, [emblaApi, onSelect]);
 
   const images = [
     { src: productBag, alt: 'Saco de papel kraft - vista principal' },
@@ -61,74 +102,34 @@ const Products = () => {
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start max-w-7xl mx-auto">
           {/* Image Gallery */}
-          <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            className="lg:col-span-6 space-y-4 lg:sticky lg:top-24"
-          >
-            {/* Main Image */}
-            <div className="relative group">
-              <motion.img
-                key={selectedImage}
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.5 }}
-                src={images[selectedImage].src}
-                alt={images[selectedImage].alt}
-                className="w-full h-140 md:h-[900px] object-cover rounded-2xl shadow-2xl"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent rounded-2xl" />
-              
-              {/* Badges */}
-              <motion.div
-                initial={{ scale: 0, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                transition={{ delay: 0.8, type: 'spring', stiffness: 200 }}
-                className="absolute top-4 right-0 bg-green-500 text-white px-4 py-2 rounded-full text-sm font-bold flex items-center shadow-lg"
-              >
-                <Check className="w-4 h-4 mr-2" /> Frete Grátis
-              </motion.div>
-              <motion.div
-                initial={{ scale: 0, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                transition={{ delay: 1, type: 'spring', stiffness: 200 }}
-                className="absolute bottom-4 left-0 bg-orange-600 text-white px-4 py-2 rounded-full text-sm font-bold shadow-lg"
-              >
-                Alta Qualidade
-              </motion.div>
-            </div>
-
-            {/* Thumbnails */}
-            <div className="grid grid-cols-4 gap-4">
-              {images.map((image, index) => (
-                <motion.button
-                  key={index}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={() => setSelectedImage(index)}
-                  className={`relative overflow-hidden rounded-lg transition-all duration-300 ${
-                    selectedImage === index 
-                      ? 'ring-4 ring-orange-500 shadow-lg' 
-                      : 'hover:ring-2 hover:ring-orange-300'
-                  }`}
-                >
-                  <img
-                    src={image.src}
-                    alt={image.alt}
-                    className="w-full h-24 object-cover"
-                  />
-                  {selectedImage === index && (
-                    <motion.div
-                      layoutId="selected-indicator"
-                      className="absolute inset-0 bg-orange-500/20"
+            <div className="lg:col-span-6 space-y-4 lg:sticky lg:top-24">
+              <div className="embla" ref={emblaRef}>
+                <div className="embla__container">
+                  {images.map((image, index) => (
+                    <div className="embla__slide" key={index}>
+                      <img
+                        src={image.src}
+                        alt={image.alt}
+                        className="embla__slide__img"
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className="embla-thumbs" ref={emblaThumbsRef}>
+                <div className="embla-thumbs__container">
+                  {images.map((image, index) => (
+                    <Thumb
+                      key={index}
+                      onClick={() => onThumbClick(index)}
+                      selected={index === selectedIndex}
+                      imgSrc={image.src}
+                      altText={image.alt}
                     />
-                  )}
-                </motion.button>
-              ))}
+                  ))}
+                </div>
+              </div>
             </div>
-          </motion.div>
 
           {/* Product Info */}
           <motion.div

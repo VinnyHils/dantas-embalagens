@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Factory, Heart, Target, Users, Award, Leaf } from 'lucide-react';
-import elegantBag from '../assets/images/elegant-bag.jpg';
+import elegantBag from '../assets/images/elegant-bag.webp';
 
 const About = () => {
   const timeline = [

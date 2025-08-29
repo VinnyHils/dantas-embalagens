@@ -1,21 +1,29 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Routes, Route, useLocation } from 'react-router-dom';
+import { AnimatePresence } from 'framer-motion';
 import Header from './components/Header';
-import Hero from './components/Hero';
-import Products from './components/Products';
-import UseCases from './components/UseCases';
-import Contact from './components/Contact';
 import Footer from './components/Footer';
+import HomePage from './pages/HomePage';
+import AboutPage from './pages/AboutPage';
+import ScrollToTop from './components/ScrollToTop';
 import './App.css';
+import './carousel.css';
 
 function App() {
+  const [activeSection, setActiveSection] = useState('inicio');
+  const location = useLocation();
+
   return (
     <div className="App">
-      <Header />
+      <Header activeSection={activeSection} />
+      <ScrollToTop />
       <main>
-        <Hero />
-        <Products />
-        <UseCases />
-        <Contact />
+        <AnimatePresence mode="wait">
+          <Routes location={location} key={location.pathname}>
+            <Route path="/" element={<HomePage setSection={setActiveSection} />} />
+            <Route path="/sobre" element={<AboutPage />} />
+          </Routes>
+        </AnimatePresence>
       </main>
       <Footer />
     </div>
