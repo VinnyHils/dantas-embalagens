@@ -5,11 +5,16 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { Mail, Phone, MapPin, Clock, Send, CheckCircle, AlertCircle } from 'lucide-react';
 import { track } from '../lib/analytics';
+import { formatPhoneBR, onlyDigits } from '../lib/utils';
 
 const contactSchema = z.object({
   name: z.string().min(3, { message: "O nome deve ter pelo menos 3 caracteres." }),
   email: z.string().email({ message: "Por favor, insira um e-mail válido." }),
-  phone: z.string().optional(),
+  phone: z.string().optional().refine((val) => {
+    if (!val) return true; // opcional
+    const digits = onlyDigits(val);
+    return digits.length === 10 || digits.length === 11;
+  }, { message: "Telefone deve ter 10 ou 11 dígitos." }),
   subject: z.string().min(1, { message: "Por favor, selecione um assunto." }),
   message: z.string().min(10, { message: "A mensagem deve ter pelo menos 10 caracteres." }),
 });
@@ -18,9 +23,11 @@ const Contact = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState(null);
 
-  const { register, handleSubmit, formState: { errors }, reset } = useForm({
+  const { register, handleSubmit, formState: { errors }, reset, setValue, watch } = useForm({
     resolver: zodResolver(contactSchema),
   });
+
+  const phoneWatch = watch('phone');
 
   const onSubmit = async (data) => {
     setIsSubmitting(true);
@@ -221,9 +228,22 @@ const Contact = () => {
                     type="tel"
                     id="phone"
                     {...register("phone")}
-                    className="w-full px-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-300"
+                    value={phoneWatch || ''}
+                    onChange={(e) => {
+                      const masked = formatPhoneBR(e.target.value);
+                      setValue('phone', masked, { shouldValidate: true });
+                    }}
+                    onBlur={() => {
+                      if (errors.phone) {
+                        track('form_field_error', { form: 'contato', field: 'phone', message: errors.phone.message });
+                      }
+                    }}
+                    className={`w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-300 ${errors.phone ? 'border-red-500 focus:ring-red-500' : 'border-slate-300'}`}
                     placeholder="(11) 99999-9999"
+                    inputMode="tel"
+                    aria-invalid={!!errors.phone}
                   />
+                  {errors.phone && <p className="text-red-600 text-sm mt-1">{errors.phone.message}</p>}
                 </div>
 
                 <div>
