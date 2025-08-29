@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 import Header from './components/Header';
+import Seo from './components/Seo';
 import Footer from './components/Footer';
 import HomePage from './pages/HomePage';
 import AboutPage from './pages/AboutPage';
@@ -22,7 +23,8 @@ function App() {
 
   return (
     <div className="App">
-      <Header activeSection={activeSection} />
+  <Seo />
+  <Header activeSection={activeSection} />
       <ScrollToTop />
       <main>
         <AnimatePresence mode="wait">
