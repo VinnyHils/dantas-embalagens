@@ -48,6 +48,16 @@ export default function Seo() {
     }
     linkCanonical.setAttribute('href', canonicalUrl);
 
+    // Robots (noindex somente para 404)
+    const isNotFound = path === '/404' || path === '/nao-encontrado' || (path !== '/' && !seoMap[path] && !path.startsWith('/produto/'));
+    let robotsTag = document.head.querySelector('meta[name="robots"]');
+    if (!robotsTag) {
+      robotsTag = document.createElement('meta');
+      robotsTag.setAttribute('name', 'robots');
+      document.head.appendChild(robotsTag);
+    }
+    robotsTag.setAttribute('content', isNotFound ? 'noindex, nofollow' : 'index, follow');
+
     // OG basics
     const ogPairs = {
       'og:title': title,
@@ -82,6 +92,71 @@ export default function Seo() {
       }
       tag.setAttribute('content', content);
     });
+
+    // JSON-LD
+    const removeOld = () => {
+      document.querySelectorAll('script[data-seo-jsonld="true"]').forEach(n => n.remove());
+    };
+    removeOld();
+
+    const pushJsonLd = (data) => {
+      const script = document.createElement('script');
+      script.type = 'application/ld+json';
+      script.dataset.seoJsonld = 'true';
+      script.text = JSON.stringify(data);
+      document.head.appendChild(script);
+    };
+
+    // Organization
+    pushJsonLd({
+      '@context': 'https://schema.org',
+      '@type': 'Organization',
+      name: 'Dantas Embalagens',
+      url: SITE_BASE_URL,
+      logo: SITE_BASE_URL + '/favicon.ico',
+      address: {
+        '@type': 'PostalAddress',
+        addressLocality: 'Atibaia',
+        addressRegion: 'SP',
+        addressCountry: 'BR'
+      },
+      contactPoint: [{
+        '@type': 'ContactPoint',
+        contactType: 'customer service',
+        telephone: '+55-11-4411-2233'
+      }]
+    });
+
+    // WebSite + SearchAction (placeholder)
+    pushJsonLd({
+      '@context': 'https://schema.org',
+      '@type': 'WebSite',
+      url: SITE_BASE_URL,
+      name: 'Dantas Embalagens',
+      potentialAction: {
+        '@type': 'SearchAction',
+        target: SITE_BASE_URL + '/?q={search_term_string}',
+        'query-input': 'required name=search_term_string'
+      }
+    });
+
+    // Product (se rota de produto)
+    if (path.startsWith('/produto/') && params.slug) {
+      pushJsonLd({
+        '@context': 'https://schema.org',
+        '@type': 'Product',
+        name: meta.title?.replace(/ \| Dantas Embalagens$/, ''),
+        description: meta.description,
+        brand: { '@type': 'Brand', name: 'Dantas Embalagens' },
+        image: [SITE_BASE_URL + DEFAULT_OG_IMAGE],
+        offers: {
+          '@type': 'Offer',
+          availability: 'https://schema.org/InStock',
+          priceCurrency: 'BRL',
+          price: '0.00' // placeholder até termos preço real
+        }
+      });
+    }
 
   }, [meta, path]);
 
