@@ -87,6 +87,16 @@ const Products = () => {
   return (
     <section id="produto" className="py-20 bg-white">
       <div className="container mx-auto px-4 sm:px-6">
+        {/* Breadcrumb */}
+        <nav aria-label="breadcrumb" className="text-sm mb-6 text-slate-500">
+          <ol className="flex flex-wrap items-center gap-2">
+            <li>
+              <a href="#inicio" className="hover:text-orange-600 transition-colors">Início</a>
+            </li>
+            <li className="text-slate-400">/</li>
+            <li className="font-medium text-slate-700">Produto</li>
+          </ol>
+        </nav>
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -94,17 +104,18 @@ const Products = () => {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <div className="flex justify-center">
-            <span className="inline-block text-[11px] sm:text-xs font-semibold tracking-wide uppercase text-orange-700 bg-orange-50 border border-orange-200 px-3 py-1 rounded-full mb-4 shadow-sm">
-              Produto em Destaque
-            </span>
-          </div>
           <h2 className="text-section-title mb-4 text-slate-800 leading-tight">
             Saco de Papel Multiuso 20cm
           </h2>
           <p className="text-lg sm:text-xl text-slate-600 max-w-2xl mx-auto">
             A solução perfeita para seu negócio com qualidade garantida
           </p>
+          {/* Links de âncora */}
+          <div className="mt-6 flex flex-wrap justify-center gap-4 text-sm">
+            <a href="#caracteristicas" className="text-orange-600 hover:underline">Características</a>
+            <a href="#especificacoes" className="text-orange-600 hover:underline">Especificações</a>
+            <a href="#beneficios" className="text-orange-600 hover:underline">Benefícios</a>
+          </div>
         </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start max-w-7xl mx-auto">
@@ -182,7 +193,7 @@ const Products = () => {
             </div>
 
             {/* Features */}
-            <motion.div
+            <motion.div id="caracteristicas"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.4 }}
@@ -213,7 +224,7 @@ const Products = () => {
             </motion.div>
 
             {/* Specifications */}
-            <motion.div
+            <motion.div id="especificacoes"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.6 }}
@@ -232,7 +243,7 @@ const Products = () => {
             </motion.div>
 
             {/* Benefits List */}
-            <motion.div
+            <motion.div id="beneficios"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.7 }}
@@ -301,6 +312,15 @@ const Products = () => {
           </motion.div>
         </div>
       </div>
+      {/* Breadcrumb JSON-LD */}
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        'itemListElement': [
+          { '@type': 'ListItem', position: 1, name: 'Início', item: 'https://www.dantasembalagens.com.br/' },
+          { '@type': 'ListItem', position: 2, name: 'Produto', item: 'https://www.dantasembalagens.com.br/#produto' }
+        ]
+      }) }} />
     </section>
   );
 };

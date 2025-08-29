@@ -88,24 +88,57 @@ const About = () => {
             </div>
 
             <p className="text-slate-600 leading-relaxed">
-              Fundada em Atibaia, a Dantas Embalagens nasceu do sonho de uma família 
+              Fundada em Atibaia, a <span className="bg-gradient-to-r from-orange-600 to-orange-500 bg-clip-text text-transparent font-semibold">Dantas Embalagens</span> nasceu do sonho de uma família 
               empreendedora que acreditava no poder das pequenas empresas de fazer a diferença. 
               Começamos com uma pequena produção artesanal e, ao longo dos anos, crescemos 
               sem perder nossa essência familiar.
             </p>
 
             <p className="text-slate-600 leading-relaxed">
-              Hoje, somos uma referência na fabricação de sacos de papel e embalagens 
+              Hoje, somos uma <span className="font-semibold text-orange-600">referência</span> na fabricação de sacos de papel e embalagens 
               descartáveis, atendendo desde pequenos comerciantes até grandes empresas. 
               Nossa missão é simples: oferecer produtos de qualidade que valorizem 
               o trabalho dos nossos clientes.
             </p>
 
             <p className="text-slate-600 leading-relaxed">
-              Acreditamos que cada embalagem conta uma história, e queremos fazer parte 
+              Acreditamos que <span className="italic text-orange-600/90 font-medium">cada embalagem conta uma história</span>, e queremos fazer parte 
               da sua. Por isso, investimos constantemente em tecnologia, qualidade e 
               atendimento personalizado, mantendo sempre os valores familiares que nos trouxeram até aqui.
             </p>
+
+            {/* Por que escolher a Dantas */}
+            <motion.div
+              initial={{ opacity: 0, y: 25 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7 }}
+              viewport={{ once: true }}
+              className="mt-8"
+            >
+              <h4 className="text-lg font-bold text-slate-800 mb-4 tracking-tight">Por que escolher a Dantas?</h4>
+              <ul className="space-y-4">
+                {[
+                  { icon: Award, title: 'Qualidade certificada', desc: 'Processos consistentes e foco em excelência.' },
+                  { icon: Users, title: 'Atendimento próximo', desc: 'Suporte humano e direto, sem burocracia.' },
+                  { icon: Leaf, title: 'Compromisso sustentável', desc: 'Materiais responsáveis e redução de resíduos.' },
+                  { icon: Factory, title: 'Preço de fábrica', desc: 'Sem intermediários: mais valor para seu negócio.' },
+                ].map((item, i) => (
+                  <motion.li
+                    key={item.title}
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.5, delay: 0.1 * i }}
+                    viewport={{ once: true }}
+                    className="flex items-start gap-3"
+                  >
+                    <span className="mt-0.5 inline-flex h-8 w-8 items-center justify-center rounded-xl bg-orange-100 text-orange-600 shadow-sm">
+                      <item.icon className="w-4 h-4" />
+                    </span>
+                    <span className="leading-snug text-slate-600"><span className="font-semibold text-slate-800">{item.title}:</span> {item.desc}</span>
+                  </motion.li>
+                ))}
+              </ul>
+            </motion.div>
 
             <div className="flex items-center space-x-4 pt-4">
               <div className="flex items-center space-x-2">

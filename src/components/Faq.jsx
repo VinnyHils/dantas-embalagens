@@ -76,7 +76,23 @@ const Faq = () => {
                   </div>
                 </AccordionTrigger>
                 <AccordionContent className="px-6 pb-6 text-slate-600 text-base">
-                  {item.answer}
+                  {item.answer
+                    .replace('1.000', '<mark>1.000</mark>')
+                    .replace('melhor preço de fábrica', '<mark>melhor preço de fábrica</mark>')
+                    .replace('sem personalização', '<mark>sem personalização</mark>')
+                    .replace('frete grátis', '<mark>frete grátis</mark>')
+                    .replace('2 a 5 dias úteis', '<mark>2 a 5 dias úteis</mark>')
+                    .replace('alta gramatura', '<mark>alta gramatura</mark>')
+                    .replace('Pix, boleto bancário e cartões de crédito', '<mark>Pix, boleto e cartões</mark>')
+                    .replace('3x sem juros', '<mark>3x sem juros</mark>')
+                    .replace('Mercado Livre', '<mark>Mercado Livre</mark>')
+                    .replace('WhatsApp', '<mark>WhatsApp</mark>')
+                    .split(/<mark>|<\/mark>/)
+                    .map((chunk, i) =>
+                      ['1.000','melhor preço de fábrica','sem personalização','frete grátis','2 a 5 dias úteis','alta gramatura','Pix, boleto e cartões','3x sem juros','Mercado Livre','WhatsApp'].includes(chunk)
+                        ? <mark key={i} className="bg-orange-100 text-orange-700 rounded px-1 py-0.5">{chunk}</mark>
+                        : <React.Fragment key={i}>{chunk}</React.Fragment>
+                    )}
                 </AccordionContent>
               </AccordionItem>
             ))}
