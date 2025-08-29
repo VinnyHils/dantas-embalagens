@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
-import { seoMap, SITE_BASE_URL, DEFAULT_OG_IMAGE, buildProductSeo } from '../lib/seoConfig';
+import { seoMap, SITE_BASE_URL, DEFAULT_OG_IMAGE, buildProductSeo, productData } from '../lib/seoConfig';
 
 // Componente que injeta metas básicas. Para OG/Twitter usa mesma base.
 export default function Seo() {
@@ -142,18 +142,28 @@ export default function Seo() {
 
     // Product (se rota de produto)
     if (path.startsWith('/produto/') && params.slug) {
+      const p = productData;
       pushJsonLd({
         '@context': 'https://schema.org',
         '@type': 'Product',
-        name: meta.title?.replace(/ \| Dantas Embalagens$/, ''),
-        description: meta.description,
-        brand: { '@type': 'Brand', name: 'Dantas Embalagens' },
-        image: [SITE_BASE_URL + DEFAULT_OG_IMAGE],
+        name: p.name,
+        description: p.description,
+        sku: p.sku,
+        brand: { '@type': 'Brand', name: p.brand },
+        image: p.images.map(img => img.startsWith('http') ? img : SITE_BASE_URL + img.replace(/^\/src/, '')), // ajusta path build
+        aggregateRating: {
+          '@type': 'AggregateRating',
+          ratingValue: p.ratingValue,
+          reviewCount: p.reviewCount
+        },
         offers: {
           '@type': 'Offer',
-          availability: 'https://schema.org/InStock',
-          priceCurrency: 'BRL',
-          price: '0.00' // placeholder até termos preço real
+          availability: p.availability,
+          priceCurrency: p.priceCurrency,
+          price: p.price,
+          priceValidUntil: p.priceValidUntil,
+          url: SITE_BASE_URL + '/produto/' + p.slug,
+          itemCondition: p.condition
         }
       });
     }

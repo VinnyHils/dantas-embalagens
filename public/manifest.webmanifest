@@ -1,0 +1,13 @@
+{
+  "name": "Dantas Embalagens",
+  "short_name": "Dantas",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#FFFFFF",
+  "theme_color": "#EA580C",
+  "description": "Sacos de papel direto da fábrica em Atibaia-SP.",
+  "icons": [
+    {"src": "/favicon.ico", "sizes": "64x64 32x32 24x24 16x16", "type": "image/x-icon"}
+  ]
+}
