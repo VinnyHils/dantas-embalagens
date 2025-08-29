@@ -116,7 +116,7 @@ const Contact = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1 }}
               viewport={{ once: true }}
-              className="bg-gradient-to-r from-green-500 to-green-600 rounded-2xl p-6 text-white mb-10"
+              className="bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 rounded-2xl p-6 text-white mb-10 shadow-[0_12px_28px_-6px_rgba(0,0,0,0.30),0_8px_12px_-4px_rgba(0,0,0,0.20)] hover:shadow-[0_20px_42px_-8px_rgba(0,0,0,0.40),0_10px_20px_-6px_rgba(0,0,0,0.28)] hover-lift ring-1 ring-white/10 transition-all duration-300"
             >
               <h4 className="font-bold text-lg mb-2">Atendimento via WhatsApp</h4>
               <p className="mb-4 opacity-90">
