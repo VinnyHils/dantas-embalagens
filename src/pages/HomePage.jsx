@@ -22,8 +22,8 @@ const HomePage = ({ setSection }) => {
     // Ordem invertida para que a seção mais "profunda" tenha prioridade quando múltiplas estiverem visíveis (ex: contato vs depoimentos)
   // Só troca para contato se depoimentos já não estiver mais visível
   if (contatoInView && !depoimentosInView) setSection('contato');
+  else if (usosInView) setSection('usos');
   else if (depoimentosInView) setSection('depoimentos');
-    else if (usosInView) setSection('usos');
     else if (produtoInView) setSection('produto');
     else if (inicioInView) setSection('inicio');
   }, [inicioInView, produtoInView, usosInView, depoimentosInView, contatoInView, setSection]);
