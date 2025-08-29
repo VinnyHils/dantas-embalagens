@@ -1,27 +1,44 @@
 import React from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Package, Mail, Phone, MapPin, Facebook, Instagram, Linkedin, Heart } from 'lucide-react';
+import { Package, Mail, Phone, MapPin, Facebook, Instagram, Linkedin } from 'lucide-react';
 
 const Footer = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+
   const scrollToSection = (sectionId) => {
+    if (sectionId === 'sobre') {
+      if (location.pathname !== '/sobre') navigate('/sobre');
+      return;
+    }
+    // Se não estiver na home, vai para home e depois tenta scroll
+    if (location.pathname !== '/') {
+      navigate('/');
+      setTimeout(() => {
+        const el = document.getElementById(sectionId);
+        el?.scrollIntoView({ behavior: 'smooth' });
+      }, 300);
+      return;
+    }
     const element = document.getElementById(sectionId);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
+  // Mesmos itens do header para consistência
   const quickLinks = [
     { id: 'inicio', label: 'Início' },
-    { id: 'produtos', label: 'Produtos' },
-    { id: 'sobre', label: 'Quem Somos' },
-    { id: 'contato', label: 'Contato' }
+    { id: 'produto', label: 'Produto' },
+    { id: 'usos', label: 'Como Usar' },
+    { id: 'depoimentos', label: 'Depoimentos' },
+    { id: 'contato', label: 'Contato' },
+    { id: 'sobre', label: 'Sobre & FAQ' }
   ];
 
   const products = [
-    'Sacos de Papel 20cm',
-    'Embalagens para Pipoca',
-    'Sacos para Lanches',
-    'Embalagens Personalizadas'
+    { nome: 'Sacos de Papel 20cm', slug: 'sacos-papel-20cm' }
   ];
 
   const socialLinks = [
@@ -33,7 +50,7 @@ const Footer = () => {
   return (
     <footer className="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white">
       <div className="container mx-auto px-6 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
           {/* Company Info */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -77,16 +94,29 @@ const Footer = () => {
             transition={{ duration: 0.6, delay: 0.1 }}
             viewport={{ once: true }}
           >
-            <h3 className="font-bold text-lg mb-6">Links Rápidos</h3>
+            <h3 className="font-bold text-lg mb-6">Navegação</h3>
             <ul className="space-y-3">
               {quickLinks.map((link, index) => (
                 <li key={index}>
-                  <button
-                    onClick={() => scrollToSection(link.id)}
-                    className="text-gray-300 hover:text-orange-400 transition-colors duration-300 text-sm"
-                  >
-                    {link.label}
-                  </button>
+                  {link.id === 'sobre' ? (
+                    <Link
+                      to="/sobre"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        scrollToSection('sobre');
+                      }}
+                      className="footer-nav-link text-gray-300 text-sm"
+                    >
+                      {link.label}
+                    </Link>
+                  ) : (
+                    <button
+                      onClick={() => scrollToSection(link.id)}
+                      className="footer-nav-link text-gray-300 text-sm"
+                    >
+                      {link.label}
+                    </button>
+                  )}
                 </li>
               ))}
             </ul>
@@ -101,13 +131,43 @@ const Footer = () => {
           >
             <h3 className="font-bold text-lg mb-6">Produtos</h3>
             <ul className="space-y-3">
-              {products.map((product, index) => (
-                <li key={index}>
-                  <span className="text-gray-300 text-sm hover:text-orange-400 transition-colors duration-300 cursor-pointer">
-                    {product}
-                  </span>
+              {products.map((product) => (
+                <li key={product.slug}>
+                  <Link
+                    to={`/produto/${product.slug}`}
+                    className="footer-nav-link text-gray-300 text-sm"
+                  >
+                    {product.nome}
+                  </Link>
                 </li>
               ))}
+            </ul>
+          </motion.div>
+
+          {/* Legal / Recursos */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.25 }}
+            viewport={{ once: true }}
+          >
+            <h3 className="font-bold text-lg mb-6">Informações</h3>
+            <ul className="space-y-3">
+              <li>
+                <Link to="/orcamento" className="footer-nav-link text-gray-300 text-sm">
+                  Solicitar Orçamento
+                </Link>
+              </li>
+              <li>
+                <Link to="/privacidade" className="footer-nav-link text-gray-300 text-sm">
+                  Privacidade
+                </Link>
+              </li>
+              <li>
+                <Link to="/termos" className="footer-nav-link text-gray-300 text-sm">
+                  Termos de Uso
+                </Link>
+              </li>
             </ul>
           </motion.div>
 
@@ -164,7 +224,7 @@ const Footer = () => {
             
             <div className="flex items-center space-x-1 text-sm text-gray-400">
               <span>Feito com</span>
-              <Heart className="w-4 h-4 text-red-500 fill-current" />
+              <span role="img" aria-label="morango" className="text-lg leading-none">🍓</span>
               <span>em Atibaia-SP</span>
             </div>
           </div>

@@ -317,3 +317,29 @@
   line-height: 1.2;
   font-weight: 700;
 }
+
+/* Footer link animation (underline slide + lift) */
+.footer-nav-link {
+  position: relative;
+  display: inline-block;
+  transition: color .25s ease, transform .25s ease;
+}
+.footer-nav-link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  height: 2px;
+  width: 100%;
+  background: #fb923c; /* secondary orange */
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform .3s ease;
+}
+.footer-nav-link:hover {
+  color: #fb923c; /* hover orange */
+  transform: translateY(-2px);
+}
+.footer-nav-link:hover::after {
+  transform: scaleX(1);
+}

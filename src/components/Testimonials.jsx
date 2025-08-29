@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Star, Quote } from 'lucide-react';
+import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import cliente1 from '../assets/images/depoimento-cliente.jpg';
 
 const testimonials = [
@@ -9,7 +10,8 @@ const testimonials = [
     role: 'Dona de Food Truck',
     quote: 'As embalagens da Dantas são de altíssima qualidade! Meus clientes sempre elogiam a apresentação dos lanches. A resistência ao óleo é um grande diferencial. Virou meu fornecedor oficial!',
     rating: 5,
-    image: cliente1,
+    // image: cliente1, // Se quiser voltar a foto, descomente a linha acima e remova a linha abaixo
+    image: null,
   },
   {
     name: 'Carlos Pereira',
@@ -62,17 +64,7 @@ const Testimonials = () => {
               </div>
               
               <div className="flex items-center">
-                {testimonial.image ? (
-                  <img 
-                    src={testimonial.image} 
-                    alt={testimonial.name} 
-                    className="w-14 h-14 rounded-full object-cover mr-4 border-2 border-orange-200"
-                  />
-                ) : (
-                  <div className="w-14 h-14 rounded-full bg-orange-100 flex items-center justify-center mr-4">
-                    <span className="text-xl font-bold text-orange-600">{testimonial.name.charAt(0)}</span>
-                  </div>
-                )}
+                <FallbackAvatar name={testimonial.name} image={testimonial.image} />
                 <div className="flex-grow">
                   <h4 className="font-bold text-slate-800">{testimonial.name}</h4>
                   <p className="text-sm text-slate-500 mb-1">{testimonial.role}</p>
@@ -92,3 +84,30 @@ const Testimonials = () => {
 };
 
 export default Testimonials;
+
+// Componente separado para controlar fallback e erro de imagem
+function FallbackAvatar({ name, image }) {
+  const [failed, setFailed] = useState(false);
+  const showImage = image && !failed;
+  const initial = name?.charAt(0).toUpperCase() || '?';
+
+  return (
+    <Avatar className="w-14 h-14 mr-4 border-2 border-orange-200 bg-orange-50">
+      {showImage && (
+        <AvatarImage
+          src={image}
+          alt={`Foto de ${name}`}
+          loading="lazy"
+          decoding="async"
+          className="object-cover"
+          onError={() => setFailed(true)}
+        />
+      )}
+      {(!showImage) && (
+        <AvatarFallback className="text-orange-600 font-bold text-xl bg-orange-100">
+          {initial}
+        </AvatarFallback>
+      )}
+    </Avatar>
+  );
+}
