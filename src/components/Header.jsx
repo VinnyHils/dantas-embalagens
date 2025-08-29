@@ -20,21 +20,54 @@ const Header = ({ activeSection }) => {
   }, []);
 
   const handleNavigate = (path, sectionId) => {
+    const performScroll = () => {
+      const element = document.getElementById(sectionId);
+      if (!element) return;
+
+      const customInnerOffset = parseInt(element.getAttribute('data-scroll-offset') || '0', 10);
+
+      const computeTarget = () => {
+        const headerEl = document.querySelector('header');
+        const headerHeight = headerEl ? headerEl.offsetHeight : 80;
+        const rawTop = element.getBoundingClientRect().top + window.scrollY;
+        // Aplica offset interno para alinhar heading real no topo
+        return Math.max(rawTop - headerHeight - 4 + customInnerOffset, 0);
+      };
+
+      const target = computeTarget();
+      window.scrollTo({ top: target, behavior: 'smooth' });
+
+      let attempts = 0;
+      const maxAttempts = 10;
+      const tolerance = 4;
+      const align = () => {
+        attempts += 1;
+        const headerEl = document.querySelector('header');
+        const headerHeight = headerEl ? headerEl.offsetHeight : 80;
+        const rectTop = element.getBoundingClientRect().top;
+        // Queremos que a área interna (após padding) alinhe - então medimos diferença invertendo offset
+        const desired = headerHeight + 4 - customInnerOffset;
+        const delta = rectTop - desired;
+        if (Math.abs(delta) <= tolerance || attempts >= maxAttempts) {
+          if (Math.abs(delta) > tolerance) {
+            window.scrollBy({ top: delta, behavior: 'auto' });
+          }
+          setIsMenuOpen(false);
+          return;
+        }
+        window.scrollBy({ top: delta, behavior: 'auto' });
+        setTimeout(align, 90);
+      };
+      setTimeout(align, 320);
+    };
+
     if (location.pathname !== '/') {
       navigate('/');
-      setTimeout(() => {
-        const element = document.getElementById(sectionId);
-        if (element) {
-          element.scrollIntoView({ behavior: 'smooth' });
-        }
-      }, 100);
+      // Delay suficiente para montar DOM e calcular alturas corretas
+      setTimeout(performScroll, 340);
     } else {
-      const element = document.getElementById(sectionId);
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
-      }
+      performScroll();
     }
-    setIsMenuOpen(false);
   };
 
   const menuItems = [

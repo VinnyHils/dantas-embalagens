@@ -61,8 +61,8 @@ const About = () => {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-section-title mb-4 text-slate-800">
-            Nossa História
+          <h2 className="text-section-title mb-4 text-slate-800 tracking-tight">
+            <span className="block text-3xl sm:text-4xl md:text-[2.75rem] leading-tight">Nossa História</span>
           </h2>
           <p className="text-xl text-slate-600 max-w-3xl mx-auto">
             Conheça a Dantas Embalagens, uma empresa familiar dedicada a oferecer 

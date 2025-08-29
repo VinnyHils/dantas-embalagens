@@ -11,4 +11,10 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  server: {
+    host: true,          // permite acesso via IP local (0.0.0.0)
+    port: 5173,          // porta explícita (ajuste se já estiver em uso)
+    open: false,         // não abrir automaticamente
+    cors: true,          // garantir acesso de outros devices
+  },
 })

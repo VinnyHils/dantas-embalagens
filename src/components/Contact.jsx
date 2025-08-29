@@ -46,7 +46,7 @@ const Contact = () => {
     {
       icon: Mail,
       title: 'E-mail',
-      info: 'contato@dantasembalagens.com.br',
+      info: 'dantasembalagens.com.br',
       description: 'Respondemos em até 24h'
     },
     {

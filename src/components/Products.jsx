@@ -92,10 +92,15 @@ const Products = () => {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-section-title mb-4 text-slate-800">
+          <div className="flex justify-center">
+            <span className="inline-block text-[11px] sm:text-xs font-semibold tracking-wide uppercase text-orange-700 bg-orange-50 border border-orange-200 px-3 py-1 rounded-full mb-4 shadow-sm">
+              Produto em Destaque
+            </span>
+          </div>
+          <h2 className="text-section-title mb-4 text-slate-800 leading-tight">
             Saco de Papel Multiuso 20cm
           </h2>
-          <p className="text-xl text-slate-600 max-w-2xl mx-auto">
+          <p className="text-lg sm:text-xl text-slate-600 max-w-2xl mx-auto">
             A solução perfeita para seu negócio com qualidade garantida
           </p>
         </motion.div>
