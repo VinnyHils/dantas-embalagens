@@ -59,10 +59,10 @@ const About = () => {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="text-center mb-12 md:mb-16"
         >
           <h2 className="text-section-title mb-4 text-slate-800 tracking-tight">
-            <span className="block text-3xl sm:text-4xl md:text-[2.75rem] leading-tight">Nossa História</span>
+            <span className="block text-[2.15rem] sm:text-4xl md:text-[2.75rem] leading-tight">Nossa História</span>
           </h2>
           <p className="text-xl text-slate-600 max-w-3xl mx-auto">
             Conheça a Dantas Embalagens, uma empresa familiar dedicada a oferecer 
