@@ -6,6 +6,7 @@ import productBag from '../assets/images/product-bag.webp';
 import galleryBags from '../assets/images/gallery-bags.webp';
 import elegantBag from '../assets/images/elegant-bag.webp';
 import heroBag from '../assets/images/hero-bag.webp';
+import { track } from '../lib/analytics';
 
 const Thumb = ({ selected, onClick, imgSrc, altText }) => (
   <div
@@ -114,6 +115,9 @@ const Products = () => {
                     <div className="embla__slide" key={index}>
                       <img
                         src={image.src}
+                        srcSet={`${image.src} 1x`}
+                        loading={index === 0 ? 'eager' : 'lazy'}
+                        decoding="async"
                         alt={image.alt}
                         className="embla__slide__img"
                       />
@@ -257,10 +261,11 @@ const Products = () => {
               viewport={{ once: true }}
               className="space-y-4 pt-6"
             >
-              <motion.button
+                  <motion.button
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 className="w-full bg-gradient-to-r from-orange-600 to-orange-700 hover:from-orange-700 hover:to-orange-800 text-white font-bold py-4 px-8 rounded-xl transition-all duration-300 flex items-center justify-center space-x-2 shadow-lg hover:shadow-xl"
+                    onClick={() => track('cta_click', { cta: 'mercado_livre' })}
               >
                 <ShoppingCart className="w-5 h-5" />
                 <span>Comprar no Mercado Livre</span>
@@ -274,6 +279,7 @@ const Products = () => {
                 rel="noopener noreferrer"
                 className="w-full bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-bold py-4 px-8 rounded-xl transition-all duration-300 flex items-center justify-center gap-3 shadow-lg hover:shadow-xl"
                 aria-label="Chamar no WhatsApp"
+                onClick={() => track('cta_click', { cta: 'whatsapp_produto' })}
               >
                 <span className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-white/15">
                   <svg

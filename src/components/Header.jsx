@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import logo from '../assets/images/logo.png';
+import { track } from '../lib/analytics';
 
 const Header = ({ activeSection }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -20,6 +21,7 @@ const Header = ({ activeSection }) => {
   }, []);
 
   const handleNavigate = (path, sectionId) => {
+    track('nav_click', { path, section: sectionId });
     const performScroll = () => {
       const element = document.getElementById(sectionId);
       if (!element) return;
@@ -132,6 +134,7 @@ const Header = ({ activeSection }) => {
                     className={`relative text-slate-700 hover:text-orange-600 font-medium transition-colors duration-200 text-sm pb-1 ${
                       isActive ? 'text-orange-600' : ''
                     }`}
+                    aria-current={isActive ? 'page' : undefined}
                   >
                     {item.label}
                     {isActive && (
@@ -152,6 +155,7 @@ const Header = ({ activeSection }) => {
                   className={`relative text-slate-700 hover:text-orange-600 font-medium transition-colors duration-200 text-sm pb-1 ${
                     isActive ? 'text-orange-600' : ''
                   }`}
+                  aria-current={isActive ? 'true' : undefined}
                 >
                   {item.label}
                   {isActive && (
@@ -173,6 +177,7 @@ const Header = ({ activeSection }) => {
             whileTap={{ scale: 0.95 }}
             onClick={() => handleNavigate('/', 'contato')}
             className="hidden md:block bg-gradient-to-r from-orange-600 to-orange-700 text-white font-bold py-2.5 px-6 rounded-full hover:from-orange-700 hover:to-orange-800 transition-all duration-300 text-sm shadow-lg"
+            aria-label="Ir para contato"
           >
             Comprar Agora
           </motion.button>
