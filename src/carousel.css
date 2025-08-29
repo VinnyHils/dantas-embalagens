@@ -10,10 +10,30 @@
   flex: 0 0 100%;
   min-width: 0;
 }
+/* Padrão mobile/tablet: mostrar inteira (contain) */
 .embla__slide__img {
   width: 100%;
-  height: 100%;
-  object-fit: cover;
+  height: auto;
+  max-height: 800px;
+  object-fit: contain;
+  margin: 0 auto;
+  display: block;
+}
+
+/* Limite específico para celulares (reduz ainda mais a altura) */
+@media (max-width: 640px) {
+  .embla__slide__img {
+    max-height: 420px; /* ajuste altura mobile*/
+  }
+}
+
+/* Desktop grande: cortar para ocupar área (cover) */
+@media (min-width: 1024px) {
+  .embla__slide__img {
+    height: 780px; /* altura fixa para layout consistente */
+    max-height: none;
+    object-fit: cover; /* corta laterais se necessário */
+  }
 }
 
 .embla-thumbs {

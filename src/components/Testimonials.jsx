@@ -31,7 +31,9 @@ const testimonials = [
 
 const Testimonials = () => {
   return (
-    <section id="depoimentos" className="py-20 bg-slate-50">
+    <>
+      {/* ID removido aqui; wrapper na HomePage possui id="depoimentos" para evitar duplicidade e calcular offset correto */}
+      <section className="py-20 bg-slate-50">
       <div className="container mx-auto px-4 sm:px-6">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -79,7 +81,8 @@ const Testimonials = () => {
           ))}
         </div>
       </div>
-    </section>
+      </section>
+    </>
   );
 };
 

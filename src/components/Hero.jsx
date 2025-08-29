@@ -173,7 +173,8 @@ const Hero = () => {
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.6, delay: 1 }}
-                className="absolute -bottom-4 left-4 bg-orange-600 text-white px-4 py-2 rounded-full font-bold text-sm shadow-lg"
+                // Em telas muito pequenas o -bottom-4 fazia cortar; ajustamos para bottom-2 e só aplicamos negativo em >= sm
+                className="absolute bottom-2 sm:-bottom-4 left-4 bg-orange-600 text-white px-4 py-2 rounded-full font-bold text-sm shadow-lg"
               >
                 Alta Qualidade
               </motion.div>
