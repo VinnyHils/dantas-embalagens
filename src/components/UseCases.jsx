@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import sacoFundoBranco from "../assets/images/saquinho-fundo-transparente-pequeno.webp";
-import sacoCinema from "../assets/images/hero-bag.webp";
+import sacoCinema from "../assets/images/saquinho-cinemas.png";
 import sacoFesta from "../assets/images/saco-festa.webp";
 import sacoChurros from "../assets/images/elegant-bag.webp";
 

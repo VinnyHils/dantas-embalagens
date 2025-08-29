@@ -6,6 +6,7 @@ import productBag from '../assets/images/product-bag.webp';
 import galleryBags from '../assets/images/gallery-bags.webp';
 import elegantBag from '../assets/images/elegant-bag.webp';
 import heroBag from '../assets/images/hero-bag.webp';
+import sacoCinemas from '../assets/images/saquinho-cinemas.png';
 import { track } from '../lib/analytics';
 
 const Thumb = ({ selected, onClick, imgSrc, altText }) => (
@@ -54,7 +55,7 @@ const Products = () => {
 
   const images = [
     { src: productBag, alt: 'Saco de papel kraft - vista principal' },
-    { src: heroBag, alt: 'Saco de papel para delivery' },
+    { src: sacoCinemas, alt: 'Saco de papel usado em cinemas' },
     { src: elegantBag, alt: 'Saco de papel elegante' },
     { src: galleryBags, alt: 'Variedade de sacos de papel' }
   ];
