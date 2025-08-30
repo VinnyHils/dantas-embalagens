@@ -343,3 +343,18 @@
 .footer-nav-link:hover::after {
   transform: scaleX(1);
 }
+
+/* Esconde botão flutuante de WhatsApp quando barra de produto mobile está visível */
+body.has-mobile-product-cta a[aria-label="Atendimento WhatsApp"] {
+  opacity: 0 !important;
+  pointer-events: none !important;
+  transform: translateY(1rem) !important; /* equivalente a translate-y-4 */
+  transition: opacity .3s ease, transform .3s ease;
+}
+@media (min-width: 768px) {
+  body.has-mobile-product-cta a[aria-label="Atendimento WhatsApp"] {
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    transform: translateY(0) !important;
+  }
+}

@@ -50,7 +50,38 @@ const Testimonials = () => {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+        {/* Carousel mobile (scroll-snap) + grid desktop */}
+        <div className="md:hidden -mx-4 px-4 overflow-x-auto flex gap-5 snap-x snap-mandatory scrollbar-hide pb-3">
+          {testimonials.map((t, index) => (
+            <div key={index} className="snap-center shrink-0 w-[85%] first:ml-0 last:mr-4">
+              <motion.div
+                initial={{ opacity: 0, y: 40, scale: 0.95 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                transition={{ duration: 0.55 }}
+                viewport={{ once: true }}
+                className="bg-white rounded-2xl shadow-lg p-6 flex flex-col hover-lift h-full"
+              >
+                <div className="flex-grow mb-5">
+                  <Quote className="w-7 h-7 text-orange-300 mb-3" />
+                  <p className="text-slate-600 italic text-sm leading-relaxed">"{t.quote}"</p>
+                </div>
+                <div className="flex items-center">
+                  <FallbackAvatar name={t.name} image={t.image} />
+                  <div className="flex-grow">
+                    <h4 className="font-bold text-slate-800 text-sm">{t.name}</h4>
+                    <p className="text-xs text-slate-500 mb-1">{t.role}</p>
+                    <div className="flex">
+                      {[...Array(t.rating)].map((_, i) => (
+                        <Star key={i} className="w-3.5 h-3.5 fill-yellow-400 text-yellow-400" />
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            </div>
+          ))}
+        </div>
+        <div className="hidden md:grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
           {testimonials.map((testimonial, index) => (
             <motion.div
               key={index}
@@ -64,7 +95,6 @@ const Testimonials = () => {
                 <Quote className="w-8 h-8 text-orange-300 mb-4" />
                 <p className="text-slate-600 italic">"{testimonial.quote}"</p>
               </div>
-              
               <div className="flex items-center">
                 <FallbackAvatar name={testimonial.name} image={testimonial.image} />
                 <div className="flex-grow">

@@ -2,6 +2,8 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import useEmblaCarousel from 'embla-carousel-react';
 import { Check, ShoppingCart, Star, Zap, Shield, Package } from 'lucide-react';
+import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from './ui/accordion';
+import MobileProductCTA from './MobileProductCTA';
 import productBag from '../assets/images/product-bag.webp';
 import galleryBags from '../assets/images/gallery-bags.webp';
 import elegantBag from '../assets/images/elegant-bag.webp';
@@ -87,16 +89,6 @@ const Products = () => {
   return (
     <section id="produto" className="py-20 bg-white">
       <div className="container mx-auto px-4 sm:px-6">
-        {/* Breadcrumb */}
-        <nav aria-label="breadcrumb" className="text-sm mb-6 text-slate-500">
-          <ol className="flex flex-wrap items-center gap-2">
-            <li>
-              <a href="#inicio" className="hover:text-orange-600 transition-colors">Início</a>
-            </li>
-            <li className="text-slate-400">/</li>
-            <li className="font-medium text-slate-700">Produto</li>
-          </ol>
-        </nav>
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -110,15 +102,10 @@ const Products = () => {
           <p className="text-lg sm:text-xl text-slate-600 max-w-2xl mx-auto">
             A solução perfeita para seu negócio com qualidade garantida
           </p>
-          {/* Links de âncora */}
-          <div className="mt-6 flex flex-wrap justify-center gap-4 text-sm">
-            <a href="#caracteristicas" className="text-orange-600 hover:underline">Características</a>
-            <a href="#especificacoes" className="text-orange-600 hover:underline">Especificações</a>
-            <a href="#beneficios" className="text-orange-600 hover:underline">Benefícios</a>
-          </div>
+          {/* Links de âncora removidos conforme solicitação */}
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start max-w-7xl mx-auto">
+  <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start max-w-7xl mx-auto">
           {/* Image Gallery */}
             <div className="lg:col-span-6 space-y-4 lg:sticky lg:top-24">
               <div className="embla" ref={emblaRef}>
@@ -192,13 +179,13 @@ const Products = () => {
               </motion.div>
             </div>
 
-            {/* Features */}
+            {/* Features (desktop) */}
             <motion.div id="caracteristicas"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.4 }}
               viewport={{ once: true }}
-              className="space-y-4"
+              className="space-y-4 hidden md:block"
             >
               <h3 className="text-xl font-bold text-slate-800">Principais Características:</h3>
               <div className="space-y-4">
@@ -223,13 +210,13 @@ const Products = () => {
               </div>
             </motion.div>
 
-            {/* Specifications */}
+            {/* Specifications (desktop) */}
             <motion.div id="especificacoes"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.6 }}
               viewport={{ once: true }}
-              className="bg-slate-50 rounded-xl p-6"
+              className="bg-slate-50 rounded-xl p-6 hidden md:block"
             >
               <h3 className="text-lg font-bold text-slate-800 mb-4">Especificações Técnicas:</h3>
               <div className="grid grid-cols-2 gap-4">
@@ -242,13 +229,13 @@ const Products = () => {
               </div>
             </motion.div>
 
-            {/* Benefits List */}
+            {/* Benefits List (desktop) */}
             <motion.div id="beneficios"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.7 }}
               viewport={{ once: true }}
-              className="grid grid-cols-2 gap-3"
+              className="grid grid-cols-2 gap-3 hidden md:grid"
             >
               {benefits.map((benefit, index) => (
                 <motion.div
@@ -265,17 +252,91 @@ const Products = () => {
               ))}
             </motion.div>
 
-            {/* CTA Buttons */}
+            {/* Accordion (mobile) - versão refinada */}
+            <div className="md:hidden" aria-label="Detalhes do produto expansíveis">
+              <Accordion type="multiple" defaultValue={["carac"]} className="w-full flex flex-col gap-4">
+                {/* Características */}
+                <AccordionItem value="carac" className="group rounded-2xl bg-white ring-1 ring-slate-200/70 shadow-sm transition-all duration-300 ease-[cubic-bezier(.16,1,.3,1)] hover:shadow-md hover:ring-slate-300 data-[state=open]:shadow-lg data-[state=open]:ring-orange-500/40">
+                  <AccordionTrigger className="group flex items-center gap-4 px-4 py-3 text-[15px] font-semibold !no-underline text-slate-800 data-[state=open]:pt-4 data-[state=open]:pb-3 focus-visible:ring-orange-500/40 focus-visible:ring-2 rounded-2xl">
+                    <span className="flex items-center gap-3">
+                      <span className="flex items-center justify-center w-9 h-9 rounded-xl bg-orange-50 text-orange-600 ring-1 ring-orange-100 transition-all group-data-[state=open]:bg-gradient-to-br group-data-[state=open]:from-orange-600 group-data-[state=open]:to-orange-500 group-data-[state=open]:text-white group-data-[state=open]:ring-orange-500/60">
+                        <Zap className="w-5 h-5" />
+                      </span>
+                      <span>Principais Características</span>
+                    </span>
+                  </AccordionTrigger>
+                  <AccordionContent className="px-4 pb-5 pt-0 data-[state=open]:animate-fade-in-up">
+                    <div className="space-y-4 pt-2">
+                      {features.map((feature, index) => (
+                        <div key={index} className="flex items-start gap-4 p-3 bg-slate-50/70 rounded-xl ring-1 ring-slate-100 hover:bg-slate-50 transition-colors">
+                          <div className="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                            <feature.icon className="w-5 h-5 text-orange-600" />
+                          </div>
+                          <div>
+                            <h4 className="font-semibold text-slate-800 text-sm mb-0.5">{feature.title}</h4>
+                            <p className="text-slate-600 text-xs leading-snug">{feature.description}</p>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </AccordionContent>
+                </AccordionItem>
+                {/* Especificações */}
+                <AccordionItem value="specs" className="group rounded-2xl bg-white ring-1 ring-slate-200/70 shadow-sm transition-all duration-300 ease-[cubic-bezier(.16,1,.3,1)] hover:shadow-md hover:ring-slate-300 data-[state=open]:shadow-lg data-[state=open]:ring-orange-500/40">
+                  <AccordionTrigger className="group flex items-center gap-4 px-4 py-3 text-[15px] font-semibold !no-underline text-slate-800 focus-visible:ring-orange-500/40 focus-visible:ring-2 rounded-2xl">
+                    <span className="flex items-center gap-3">
+                      <span className="flex items-center justify-center w-9 h-9 rounded-xl bg-orange-50 text-orange-600 ring-1 ring-orange-100 transition-all group-data-[state=open]:bg-gradient-to-br group-data-[state=open]:from-orange-600 group-data-[state=open]:to-orange-500 group-data-[state=open]:text-white group-data-[state=open]:ring-orange-500/60">
+                        <Package className="w-5 h-5" />
+                      </span>
+                      <span>Especificações Técnicas</span>
+                    </span>
+                  </AccordionTrigger>
+                  <AccordionContent className="px-4 pb-5 pt-0 data-[state=open]:animate-fade-in-up">
+                    <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-1 text-xs pt-2">
+                      {specifications.map((spec, i) => (
+                        <li key={i} className="flex justify-between border-b border-dashed border-slate-200 py-1 last:border-0">
+                          <span className="text-slate-600">{spec.label}</span>
+                          <span className="font-medium text-slate-800">{spec.value}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </AccordionContent>
+                </AccordionItem>
+                {/* Benefícios */}
+                <AccordionItem value="benef" className="group rounded-2xl bg-white ring-1 ring-slate-200/70 shadow-sm transition-all duration-300 ease-[cubic-bezier(.16,1,.3,1)] hover:shadow-md hover:ring-slate-300 data-[state=open]:shadow-lg data-[state=open]:ring-orange-500/40">
+                  <AccordionTrigger className="group flex items-center gap-4 px-4 py-3 text-[15px] font-semibold !no-underline text-slate-800 focus-visible:ring-orange-500/40 focus-visible:ring-2 rounded-2xl">
+                    <span className="flex items-center gap-3">
+                      <span className="flex items-center justify-center w-9 h-9 rounded-xl bg-orange-50 text-orange-600 ring-1 ring-orange-100 transition-all group-data-[state=open]:bg-gradient-to-br group-data-[state=open]:from-orange-600 group-data-[state=open]:to-orange-500 group-data-[state=open]:text-white group-data-[state=open]:ring-orange-500/60">
+                        <Check className="w-5 h-5" />
+                      </span>
+                      <span>Benefícios</span>
+                    </span>
+                  </AccordionTrigger>
+                  <AccordionContent className="px-4 pb-5 pt-0 data-[state=open]:animate-fade-in-up">
+                    <ul className="grid grid-cols-2 gap-2 pt-2">
+                      {benefits.map((b, i) => (
+                        <li key={i} className="flex items-center gap-1.5 text-[11px] text-slate-700">
+                          <Check className="w-3.5 h-3.5 text-green-500" /> {b}
+                        </li>
+                      ))}
+                    </ul>
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
+            </div>
+
+            {/* CTA Buttons (desktop) */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.8 }}
               viewport={{ once: true }}
-              className="space-y-4 pt-6"
+              className="space-y-4 pt-6 hidden md:block"
             >
                   <motion.button
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
+                data-cta="mercado_livre"
                 className="w-full bg-gradient-to-r from-orange-600 to-orange-700 hover:from-orange-700 hover:to-orange-800 text-white font-bold py-4 px-8 rounded-xl transition-all duration-300 flex items-center justify-center space-x-2 shadow-lg hover:shadow-xl"
                     onClick={() => track('cta_click', { cta: 'mercado_livre' })}
               >
@@ -312,6 +373,8 @@ const Products = () => {
           </motion.div>
         </div>
       </div>
+  {/* Sticky CTA mobile */}
+  <MobileProductCTA />
       {/* Breadcrumb JSON-LD */}
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
         '@context': 'https://schema.org',
