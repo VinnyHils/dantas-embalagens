@@ -313,9 +313,27 @@
 }
 
 .text-section-title {
-  font-size: clamp(1.5rem, 4vw, 2.5rem);
-  line-height: 1.2;
+  /* Aumenta mínimo no mobile e suaviza crescimento para telas médias */
+  font-size: clamp(1.75rem, 5.2vw, 2.6rem); /* ~28px min, escala fluida até ~41.6px */
+  line-height: 1.15;
   font-weight: 700;
+  letter-spacing: -0.02em; /* Compacta para mais impacto visual */
+}
+
+/* Barra de acento sob títulos (ativar adicionando class 'title-accent') */
+.title-accent { position: relative; }
+.title-accent:after {
+  content: "";
+  display: block;
+  width: 60px;
+  height: 4px;
+  margin: 0.75rem auto 0;
+  border-radius: 9999px;
+  background: linear-gradient(90deg,#fb923c 0%,#f97316 55%,#ea580c 100%);
+  box-shadow: 0 1px 2px -1px rgba(249,115,22,0.45),0 0 0 1px rgba(249,115,22,0.15);
+}
+@media (min-width:640px){
+  .title-accent:after { width: 68px; height: 5px; }
 }
 
 /* Footer link animation (underline slide + lift) */

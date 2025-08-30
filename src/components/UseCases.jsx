@@ -62,7 +62,7 @@ const UseCases = () => {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-section-title mb-4 text-slate-800">
+          <h2 className="text-section-title title-accent mb-4 text-slate-800">
             Infinitas Possibilidades de Uso
           </h2>
           <p className="text-xl text-slate-600 max-w-3xl mx-auto">
@@ -77,13 +77,13 @@ const UseCases = () => {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
             viewport={{ once: true }}
-            className="flex flex-wrap justify-center gap-4 sm:gap-8 mb-12 border-b border-slate-200"
+      className="grid grid-cols-2 gap-x-4 gap-y-2 justify-items-center mb-10 sm:mb-12 sm:flex sm:flex-wrap sm:justify-center sm:gap-8 border-slate-200 sm:border-b"
           >
             {useCases.map((useCase, index) => (
               <motion.button
                 key={useCase.id}
                 onClick={() => setActiveCase(index)}
-                className={`relative px-3 py-4 text-lg font-semibold transition-colors duration-300 focus:outline-none ${
+        className={`relative w-full sm:w-auto text-center px-2 py-3 text-base sm:px-3 sm:py-4 sm:text-lg font-semibold transition-colors duration-300 focus:outline-none ${
                   activeCase === index
                     ? 'text-orange-600'
                     : 'text-slate-500 hover:text-orange-500'
@@ -93,7 +93,7 @@ const UseCases = () => {
                 {activeCase === index && (
                   <motion.div
                     layoutId="active-use-case-underline"
-                    className="absolute bottom-0 left-0 right-0 h-1 bg-orange-600"
+          className="absolute -bottom-1 sm:bottom-0 left-1/2 -translate-x-1/2 w-10 sm:w-full h-[3px] sm:h-1 bg-orange-600 rounded-full"
                     initial={false}
                     transition={{ type: 'spring', stiffness: 300, damping: 25 }}
                   />

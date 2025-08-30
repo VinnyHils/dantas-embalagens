@@ -62,19 +62,19 @@ const Products = () => {
   const benefits = featured.benefits;
 
   return (
-    <section id="produto" className="py-20 bg-white">
+    <section id="produto" className="pt-16 pb-10 md:pt-20 md:pb-16 bg-white">
       <div className="container mx-auto px-4 sm:px-6">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="text-center mb-10 md:mb-14"
         >
-          <h2 className="text-section-title mb-4 text-slate-800 leading-tight">
+          <h2 className="text-section-title title-accent mb-4 text-slate-800 leading-tight">
             Saco de Papel Multiuso 20cm
           </h2>
-          <p className="text-lg sm:text-xl text-slate-600 max-w-2xl mx-auto">
+          <p className="text-base sm:text-xl text-slate-600 max-w-2xl mx-auto">
             A solução perfeita para seu negócio com qualidade garantida
           </p>
           {/* Links de âncora removidos conforme solicitação */}
@@ -120,7 +120,7 @@ const Products = () => {
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
-            className="lg:col-span-6 space-y-8"
+            className="lg:col-span-6 space-y-6 md:space-y-8"
           >
             {/* Price and Rating */}
             <div>
@@ -129,7 +129,7 @@ const Products = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.2 }}
                 viewport={{ once: true }}
-                className="flex items-center space-x-4 mb-4"
+                className="flex items-center space-x-4 mb-3"
               >
                 <div className="flex items-center space-x-1">
                   {[...Array(5)].map((_, i) => (
@@ -144,7 +144,7 @@ const Products = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.3 }}
                 viewport={{ once: true }}
-                className="mb-6"
+                className="mb-5"
               >
                 <div className="flex items-baseline space-x-4 mb-2">
                   <span className="text-4xl font-bold text-orange-600">R$ 49,90</span>
@@ -160,7 +160,7 @@ const Products = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.4 }}
               viewport={{ once: true }}
-              className="space-y-4 hidden md:block"
+              className="space-y-3 hidden md:block"
             >
               <h3 className="text-xl font-bold text-slate-800">Principais Características:</h3>
               <div className="space-y-4">
@@ -191,7 +191,7 @@ const Products = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.6 }}
               viewport={{ once: true }}
-              className="bg-slate-50 rounded-xl p-6 hidden md:block"
+              className="bg-slate-50 rounded-xl p-5 hidden md:block"
             >
               <h3 className="text-lg font-bold text-slate-800 mb-4">Especificações Técnicas:</h3>
               <div className="grid grid-cols-2 gap-4">
@@ -210,7 +210,7 @@ const Products = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.7 }}
               viewport={{ once: true }}
-              className="grid grid-cols-2 gap-3 hidden md:grid"
+              className="grid grid-cols-2 gap-2 hidden md:grid"
             >
               {benefits.map((benefit, index) => (
                 <motion.div
@@ -229,7 +229,7 @@ const Products = () => {
 
             {/* Accordion (mobile) - versão refinada */}
             <div className="md:hidden" aria-label="Detalhes do produto expansíveis">
-              <Accordion type="multiple" defaultValue={["carac"]} className="w-full flex flex-col gap-4">
+              <Accordion type="multiple" defaultValue={["carac"]} className="w-full flex flex-col gap-3">
                 {/* Características */}
                 <AccordionItem value="carac" className="group rounded-2xl bg-white ring-1 ring-slate-200/70 shadow-sm transition-all duration-300 ease-[cubic-bezier(.16,1,.3,1)] hover:shadow-md hover:ring-slate-300 data-[state=open]:shadow-lg data-[state=open]:ring-orange-500/40">
                   <AccordionTrigger className="group flex items-center gap-4 px-4 py-3 text-[15px] font-semibold !no-underline text-slate-800 data-[state=open]:pt-4 data-[state=open]:pb-3 focus-visible:ring-orange-500/40 focus-visible:ring-2 rounded-2xl">
@@ -240,7 +240,7 @@ const Products = () => {
                       <span>Principais Características</span>
                     </span>
                   </AccordionTrigger>
-                  <AccordionContent className="px-4 pb-5 pt-0 data-[state=open]:animate-fade-in-up">
+                  <AccordionContent className="px-4 pb-4 pt-0 data-[state=open]:animate-fade-in-up">
                     <div className="space-y-4 pt-2">
                       {features.map((feature, index) => (
                         <div key={index} className="flex items-start gap-4 p-3 bg-slate-50/70 rounded-xl ring-1 ring-slate-100 hover:bg-slate-50 transition-colors">
@@ -266,7 +266,7 @@ const Products = () => {
                       <span>Especificações Técnicas</span>
                     </span>
                   </AccordionTrigger>
-                  <AccordionContent className="px-4 pb-5 pt-0 data-[state=open]:animate-fade-in-up">
+                  <AccordionContent className="px-4 pb-4 pt-0 data-[state=open]:animate-fade-in-up">
                     <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-1 text-xs pt-2">
                       {specifications.map((spec, i) => (
                         <li key={i} className="flex justify-between border-b border-dashed border-slate-200 py-1 last:border-0">
@@ -287,7 +287,7 @@ const Products = () => {
                       <span>Benefícios</span>
                     </span>
                   </AccordionTrigger>
-                  <AccordionContent className="px-4 pb-5 pt-0 data-[state=open]:animate-fade-in-up">
+                  <AccordionContent className="px-4 pb-4 pt-0 data-[state=open]:animate-fade-in-up">
                     <ul className="grid grid-cols-2 gap-2 pt-2">
                       {benefits.map((b, i) => (
                         <li key={i} className="flex items-center gap-1.5 text-[11px] text-slate-700">

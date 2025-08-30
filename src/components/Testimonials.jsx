@@ -42,7 +42,7 @@ const Testimonials = () => {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-section-title mb-4 text-slate-800">
+          <h2 className="text-section-title title-accent mb-4 text-slate-800">
             O que nossos clientes dizem
           </h2>
           <p className="text-xl text-slate-600 max-w-2xl mx-auto">

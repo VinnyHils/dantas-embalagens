@@ -91,7 +91,7 @@ const Contact = () => {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-section-title mb-4 text-slate-800">
+          <h2 className="text-section-title title-accent mb-4 text-slate-800">
             Entre em Contato
           </h2>
           <p className="text-xl text-slate-600 max-w-3xl mx-auto">
@@ -99,7 +99,7 @@ const Contact = () => {
           </p>
         </motion.div>
 
-        <div className="grid lg:grid-cols-2 gap-16 max-w-7xl mx-auto">
+  <div className="grid lg:grid-cols-2 gap-12 md:gap-16 max-w-7xl mx-auto">
           {/* Contact Info */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
@@ -144,7 +144,7 @@ const Contact = () => {
               </motion.a>
             </motion.div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
               {contactInfo.map((item, index) => (
                 <motion.div
                   key={index}
@@ -152,14 +152,48 @@ const Contact = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.15 + index * 0.1 }}
                   viewport={{ once: true }}
-                  className="bg-white rounded-2xl p-6 shadow-lg hover-lift group"
+                  className="bg-white rounded-2xl p-4 sm:p-6 shadow-lg hover-lift group"
                 >
-                  <div className="w-12 h-12 bg-orange-100 rounded-xl flex items-center justify-center mb-4 group-hover:bg-orange-200 transition-colors duration-300">
-                    <item.icon className="w-6 h-6 text-orange-600" />
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 bg-orange-100 rounded-xl flex items-center justify-center mb-3 sm:mb-4 group-hover:bg-orange-200 transition-colors duration-300">
+                    <item.icon className="w-5 h-5 sm:w-6 sm:h-6 text-orange-600" />
                   </div>
-                  <h4 className="font-bold text-slate-800 mb-2">{item.title}</h4>
-                  <p className="text-orange-600 font-medium mb-1">{item.info}</p>
-                  <p className="text-slate-500 text-sm">{item.description}</p>
+                  <h4 className="font-bold text-slate-800 mb-1 sm:mb-2 text-base sm:text-lg leading-snug">{item.title}</h4>
+                  {item.title === 'E-mail' ? (
+                    (() => {
+                      const emailDisplay = item.info.includes('@') ? item.info : `contato@${item.info}`;
+                      const mailtoHref = `mailto:${emailDisplay}`;
+                      return (
+                        <a
+                          href={mailtoHref}
+                          className="text-orange-600 font-medium mb-0.5 sm:mb-1 break-words sm:truncate inline-block max-w-full hover:underline focus:outline-none focus:ring-2 focus:ring-orange-500/40 rounded text-sm sm:text-base"
+                          aria-label={`Enviar e-mail para ${emailDisplay}`}
+                        >
+                          {emailDisplay}
+                        </a>
+                      );
+                    })()
+                  ) : item.title === 'Telefone' ? (
+                    (() => {
+                      const digits = onlyDigits(item.info);
+                      // Assume Brasil; adiciona +55 se não houver código país
+                      const hasCountry = digits.startsWith('55');
+                      const withCountry = hasCountry ? digits : `55${digits}`;
+                      const telHref = `tel:+${withCountry}`;
+                      return (
+                        <a
+                          href={telHref}
+                          onClick={() => track('contact_click', { type: 'phone' })}
+                          className="text-orange-600 font-medium mb-0.5 sm:mb-1 break-words inline-block hover:underline focus:outline-none focus:ring-2 focus:ring-orange-500/40 rounded text-sm sm:text-base"
+                          aria-label={`Ligar para ${item.info}`}
+                        >
+                          {item.info}
+                        </a>
+                      );
+                    })()
+                  ) : (
+                    <p className="text-orange-600 font-medium mb-0.5 sm:mb-1 break-words text-sm sm:text-base">{item.info}</p>
+                  )}
+                  <p className="text-slate-500 text-xs sm:text-sm leading-relaxed">{item.description}</p>
                 </motion.div>
               ))}
             </div>
