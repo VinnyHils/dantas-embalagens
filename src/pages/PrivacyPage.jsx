@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 // Página de Política de Privacidade adaptada ao layout fornecido pelo usuário
 export default function PrivacyPage() {
@@ -13,6 +13,39 @@ export default function PrivacyPage() {
     { id: 'alteracoes', label: '8. Alterações' },
     { id: 'contato', label: '9. Contato' },
   ];
+
+  const [active, setActive] = useState(sections[0].id);
+
+  // Scrollspy baseado na posição do topo das seções (mais estável que IntersectionObserver para este layout)
+  useEffect(() => {
+    let ticking = false;
+    const headerOffset = 140; // aproximação altura header + margem
+    const handleScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        let current = sections[0].id;
+        for (const s of sections) {
+          const el = document.getElementById(s.id);
+            if (!el) continue;
+          const top = el.getBoundingClientRect().top;
+          if (top - headerOffset <= 0) {
+            current = s.id;
+          } else {
+            break; // as seções estão em ordem; pode parar
+          }
+        }
+  // Força última seção se perto do final da página
+  const nearBottom = window.innerHeight + window.scrollY >= (document.documentElement.scrollHeight - 8);
+  if (nearBottom) current = sections[sections.length - 1].id;
+        setActive(prev => (prev === current ? prev : current));
+        ticking = false;
+      });
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <div className="relative pt-32 pb-24 bg-gradient-to-br from-orange-50/50 via-white to-white min-h-screen">
@@ -138,25 +171,46 @@ export default function PrivacyPage() {
             <div className="bg-white/80 backdrop-blur-sm rounded-xl border border-orange-100 p-4 shadow-sm">
               <h3 className="text-sm font-semibold text-slate-700 mb-3">Nesta página</h3>
               <ul className="space-y-2 text-sm">
-                {sections.map(s => (
-                  <li key={s.id}>
-                    <a
-                      href={`#${s.id}`}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        const el = document.getElementById(s.id);
-                        if (el) {
-                          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                          // Atualiza hash sem quebrar histórico
-                          window.history.replaceState(null, '', `#${s.id}`);
-                        }
-                      }}
-                      className="text-slate-500 hover:text-orange-600 transition-colors inline-block cursor-pointer"
-                    >
-                      {s.label}
-                    </a>
-                  </li>
-                ))}
+                {sections.map(s => {
+                  const isActive = active === s.id;
+                  return (
+                    <li key={s.id} className="relative">
+                      <a
+                        href={`#${s.id}`}
+                        aria-current={isActive ? 'true' : undefined}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          const el = document.getElementById(s.id);
+                          if (el) {
+                            el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                            window.history.replaceState(null, '', `#${s.id}`);
+                          }
+                        }}
+                        className={`group relative pl-5 pr-3 py-1.5 inline-flex items-center gap-2 cursor-pointer text-[11px] font-medium tracking-wide transition-colors duration-300 ${
+                          isActive ? 'text-orange-600' : 'text-slate-500 hover:text-orange-600'
+                        }`}
+                      >
+                        {/* Barrinha animada */}
+                        <span
+                          aria-hidden="true"
+                          className={`absolute left-0 top-1/2 -translate-y-1/2 w-1 rounded-full origin-top transition-[transform,background,opacity] duration-500 ease-[cubic-bezier(.65,.05,.36,1)] ${
+                            isActive
+                              ? 'h-5 scale-y-100 opacity-100 bg-gradient-to-b from-orange-500 to-orange-600 shadow-[0_0_0_1px_rgba(255,146,43,0.25),0_4px_8px_-2px_rgba(255,140,0,0.35)]'
+                              : 'h-5 scale-y-40 opacity-40 bg-slate-300/60 group-hover:scale-y-60 group-hover:opacity-70'
+                          }`}
+                        />
+                        {/* Glow de fundo suave */}
+                        <span
+                          aria-hidden="true"
+                          className={`absolute inset-y-0 left-0 right-0 rounded-lg -z-10 transition-opacity duration-500 ease-out bg-gradient-to-r from-orange-100/70 via-orange-50/20 to-transparent ${
+                            isActive ? 'opacity-100' : 'opacity-0 group-hover:opacity-70'
+                          }`}
+                        />
+                        {s.label}
+                      </a>
+                    </li>
+                  );
+                })}
               </ul>
             </div>
           </aside>
