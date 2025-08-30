@@ -4,11 +4,7 @@ import useEmblaCarousel from 'embla-carousel-react';
 import { Check, ShoppingCart, Star, Zap, Shield, Package } from 'lucide-react';
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from './ui/accordion';
 import MobileProductCTA from './MobileProductCTA';
-import productBag from '../assets/images/product-bag.webp';
-import galleryBags from '../assets/images/gallery-bags.webp';
-import elegantBag from '../assets/images/elegant-bag.webp';
-import heroBag from '../assets/images/hero-bag.webp';
-import sacoCinemas from '../assets/images/saquinho-cinemas.png';
+import { products } from '../data/products';
 import { track } from '../lib/analytics';
 
 const Thumb = ({ selected, onClick, imgSrc, altText }) => (
@@ -55,36 +51,15 @@ const Products = () => {
     emblaApi.on('reInit', onSelect);
   }, [emblaApi, onSelect]);
 
-  const images = [
-    { src: productBag, alt: 'Saco de papel kraft - vista principal' },
-    { src: sacoCinemas, alt: 'Saco de papel usado em cinemas' },
-    { src: elegantBag, alt: 'Saco de papel elegante' },
-    { src: galleryBags, alt: 'Variedade de sacos de papel' }
-  ];
-
-  const features = [
-    { icon: Zap, title: 'Super Versátil', description: 'Perfeito para pipoca, churros, batata frita, doces, lanches e lembrancinhas.' },
-    { icon: Package, title: 'Tamanho Ideal', description: '20cm de altura para porções generosas e apresentação profissional.' },
-    { icon: Shield, title: 'Alta Resistência', description: 'Material resistente que suporta alimentos oleosos e mantém a forma.' }
-  ];
-
-  const specifications = [
-    { label: 'Altura', value: '20cm' },
-    { label: 'Material', value: 'Papel Kraft' },
-    { label: 'Cor', value: 'Natural' },
-    { label: 'Quantidade', value: '1.000 unidades' },
-    { label: 'Peso', value: '80g/m²' },
-    { label: 'Formato', value: 'Fundo reto selado' }
-  ];
-
-  const benefits = [
-    'Material de primeira qualidade',
-    'Resistente a gordura',
-    'Ideal para alimentos',
-    'Fácil armazenamento',
-    'Preço de fábrica',
-    'Entrega rápida'
-  ];
+  const featured = products[0];
+  const images = featured.images;
+  const features = featured.features.map(f => ({
+    icon: { Zap, Package, Shield }[f.icon] || Zap,
+    title: f.title,
+    description: f.description
+  }));
+  const specifications = featured.specifications;
+  const benefits = featured.benefits;
 
   return (
     <section id="produto" className="py-20 bg-white">

@@ -1,26 +1,8 @@
 export const SITE_BASE_URL = 'https://www.dantasembalagens.com.br'; // ajustar quando confirmar domínio
 export const DEFAULT_OG_IMAGE = '/og-image.jpg'; // 1200x630 recomendado
 
-// Dados do produto principal (centralizados para reutilização em JSON-LD e futuras páginas)
-export const productData = {
-  slug: 'sacos-papel-20cm',
-  name: 'Sacos de Papel Multiuso 20cm',
-  description: 'Sacos de papel 20cm resistentes, ideais para porções, lanches e pipoca. Direto da fábrica em Atibaia-SP.',
-  sku: 'SP20-1000',
-  brand: 'Dantas Embalagens',
-  price: '49.90',
-  priceCurrency: 'BRL',
-  priceValidUntil: '2026-01-31', // revisar periodicamente
-  availability: 'https://schema.org/InStock',
-  condition: 'https://schema.org/NewCondition',
-  ratingValue: '4.9',
-  reviewCount: 127,
-  images: [
-    '/src/assets/images/hero-bag.webp',
-    '/src/assets/images/product-bag.webp',
-    '/src/assets/images/saquinho-cinemas.png'
-  ]
-};
+// Importa catálogo central (evita duplicação de dados de produto)
+import { products, getProductBySlug } from '../data/products';
 
 // Configuração central de SEO por rota
 export const seoMap = {
@@ -54,11 +36,17 @@ export const seoMap = {
   }
 };
 
+/**
+ * Gera título/descrição dinâmicos para páginas de produto a partir do catálogo central.
+ * Fallback genérico se slug não encontrado.
+ */
 export function buildProductSeo(slug) {
-  if (slug === 'sacos-papel-20cm') {
+  const p = getProductBySlug(slug);
+  if (p) {
+    // Título preferencial vindo de p.seo.title senão gera padrão
     return {
-      title: 'Sacos de Papel 20cm para Lanches e Pipoca | Dantas Embalagens',
-      description: 'Sacos de papel 20cm resistentes, ideais para porções, lanches e pipoca. Direto da fábrica em Atibaia-SP.'
+      title: p.seo?.title || `${p.nome} | Dantas Embalagens`,
+      description: p.seo?.description || p.descricao?.slice(0, 155)
     };
   }
   return {
@@ -66,3 +54,15 @@ export function buildProductSeo(slug) {
     description: 'Detalhes do produto selecionado da Dantas Embalagens.'
   };
 }
+
+/**
+ * Retorna dados brutos do produto para JSON-LD.
+ */
+export function getProductSchemaData(slug) {
+  const p = getProductBySlug(slug);
+  if (!p) return null;
+  return p;
+}
+
+// Export utilitário para possível uso futuro (lista de slugs)
+export const productSlugs = products.map(p => p.slug);

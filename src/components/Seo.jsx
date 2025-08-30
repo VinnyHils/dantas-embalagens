@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
-import { seoMap, SITE_BASE_URL, DEFAULT_OG_IMAGE, buildProductSeo, productData } from '../lib/seoConfig';
+import { seoMap, SITE_BASE_URL, DEFAULT_OG_IMAGE, buildProductSeo, getProductSchemaData } from '../lib/seoConfig';
 
 // Componente que injeta metas básicas. Para OG/Twitter usa mesma base.
 export default function Seo() {
   const location = useLocation();
   const params = useParams();
 
-  const path = location.pathname;
+    const path = location.pathname; // Corrected indentation
   let meta = seoMap[path];
 
   // Produto dinâmico
@@ -33,7 +33,7 @@ export default function Seo() {
       }
       Object.entries(attrs).forEach(([k, v]) => el.setAttribute(k, v));
       return el;
-    };
+      };
 
     // Description
     if (description) ensureTag('meta[name="description"]', { name: 'description', content: description });
@@ -142,7 +142,22 @@ export default function Seo() {
 
     // Product (se rota de produto)
     if (path.startsWith('/produto/') && params.slug) {
-      const p = productData;
+      const raw = getProductSchemaData(params.slug);
+      if (raw) {
+        const p = {
+          slug: raw.slug,
+          name: raw.nome,
+          description: raw.descricao,
+          sku: raw.schema?.sku,
+          brand: 'Dantas Embalagens',
+          price: raw.price?.toFixed ? raw.price.toFixed(2) : raw.price,
+          priceCurrency: raw.currency || 'BRL',
+            availability: raw.stock === 'in_stock' ? 'https://schema.org/InStock' : 'https://schema.org/PreOrder',
+          condition: 'https://schema.org/NewCondition',
+          ratingValue: raw.rating?.value || 0,
+          reviewCount: raw.rating?.count || 0,
+          images: raw.images?.map(i => i.src) || []
+        };
       pushJsonLd({
         '@context': 'https://schema.org',
         '@type': 'Product',
@@ -161,11 +176,12 @@ export default function Seo() {
           availability: p.availability,
           priceCurrency: p.priceCurrency,
           price: p.price,
-          priceValidUntil: p.priceValidUntil,
+          priceValidUntil: new Date(new Date().getFullYear() + 1, 0, 31).toISOString().split('T')[0],
           url: SITE_BASE_URL + '/produto/' + p.slug,
           itemCondition: p.condition
         }
       });
+      }
     }
 
   }, [meta, path]);

@@ -39,43 +39,52 @@
 .embla-thumbs {
   margin-top: 1rem;
 }
+/*=== THUMBS (REWRITE para corrigir corte e contorno) =====================*/
+/* Viewport das thumbs */
+.embla-thumbs { position: relative; z-index: 5; overflow: hidden; }
+/* Trilho */
 .embla-thumbs__container {
   display: flex;
-  gap: 1rem; /* gap-4 */
+  gap: .375rem; /* gap menor */
+  width: max-content;
+  min-width: 100%;
+  box-sizing: border-box;
 }
+/* Calcula largura para 5 thumbs (ou menos) caberem exatamente sem ultrapassar (5 * item + 4 * gap = 100%) */
+/* Miniatura: largura fixa para estabilidade e evitar recalculo que causa "corte" ao voltar */
 .embla-thumbs__slide {
-  flex: 0 0 22%; /* Adjust for 4 thumbnails with gap */
-  min-width: 0;
+  flex: 0 0 80px; /* largura base */
+  width: 80px;
+  aspect-ratio: 3 / 4; /* proporção vertical para padronizar e evitar cortes irregulares */
   position: relative;
   cursor: pointer;
-  border-radius: 0.5rem; /* rounded-lg */
+  border-radius: 8px;
+  background: #fff;
+  border: 1px solid #e2e8f0;
   overflow: hidden;
+  transition: transform .25s, box-shadow .25s, border-color .25s;
 }
-.embla-thumbs__slide__button {
-  appearance: none;
-  -webkit-appearance: none;
-  background-color: transparent;
-  touch-action: manipulation;
-  display: block;
-  position: relative;
-  width: 100%;
-  height: 100%;
-  border: 0;
-  padding: 0;
-  margin: 0;
-  outline: 0;
-  border: 2px solid transparent;
-  transition: border-color 0.2s;
+/* Caso haja menos de 5 imagens, permitir que a última expanda levemente sem quebrar layout */
+.embla-thumbs__slide:last-child {
+  flex-grow: 0;
+}
+@media (max-width: 640px) {
+  .embla-thumbs { overflow: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+  .embla-thumbs::-webkit-scrollbar { display:none; }
+  .embla-thumbs__slide { flex: 0 0 64px; width: 64px; aspect-ratio: 3 / 4; }
 }
 .embla-thumbs__slide__img {
   width: 100%;
-  height: 6rem; /* h-24 */
-  object-fit: cover;
-  transition: opacity 0.2s;
+  height: 100%;
+  object-fit: cover; /* preencher a área; pode cortar bordas, mas mantém layout uniforme */
+  display: block;
+  transition: transform .3s;
 }
-.embla-thumbs__slide:not(.embla-thumbs__slide--selected) {
-  opacity: 0.5;
-}
-.embla-thumbs__slide--selected .embla-thumbs__slide__button {
-  border-color: #ea580c; /* orange-600 */
+/* Estado normal: sem transparência para não parecer quebrado */
+.embla-thumbs__slide:not(.embla-thumbs__slide--selected) .embla-thumbs__slide__button { border-color: transparent; }
+/* Selecionada: único realce (remove duplicidade) */
+.embla-thumbs__slide--selected .embla-thumbs__slide__button { border-color: #ea580c; box-shadow: 0 0 0 2px rgba(234,88,12,.25); }
+/* Hover (desktop) */
+@media (hover: hover) {
+  .embla-thumbs__slide:not(.embla-thumbs__slide--selected):hover { transform: translateY(-3px); box-shadow: 0 4px 10px -2px rgba(0,0,0,.15); border-color:#cbd5e1; }
 }
