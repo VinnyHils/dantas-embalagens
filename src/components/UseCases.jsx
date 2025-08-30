@@ -5,7 +5,6 @@ import sacoFundoBranco from "../assets/images/saquinho-fundo-transparente-pequen
 import sacoCinema from "../assets/images/saquinho-cinemas.png";
 import sacoFesta from "../assets/images/saco-festa.webp";
 import sacoChurros from "../assets/images/elegant-bag.webp";
-import { track } from '../lib/analytics';
 
 const UseCases = () => {
   const [activeCase, setActiveCase] = useState(0);
@@ -83,10 +82,7 @@ const UseCases = () => {
             {useCases.map((useCase, index) => (
               <motion.button
                 key={useCase.id}
-                onClick={() => {
-                  setActiveCase(index);
-                  track('use_case_tab_click', { tab: useCase.id, index });
-                }}
+                onClick={() => setActiveCase(index)}
         className={`relative w-full sm:w-auto text-center px-2 py-3 text-base sm:px-3 sm:py-4 sm:text-lg font-semibold transition-colors duration-300 focus:outline-none ${
                   activeCase === index
                     ? 'text-orange-600'
@@ -182,7 +178,7 @@ const UseCases = () => {
             <motion.button
               whileHover={{ scale: 1.06 }}
               whileTap={{ scale: 0.92 }}
-              onClick={() => { prevCase(); track('use_case_prev', { from: activeCase }); }}
+              onClick={prevCase}
               aria-label="Anterior"
               className="absolute left-4 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full flex items-center justify-center text-slate-600 hover:text-orange-600 transition-all duration-300 z-10 bg-white/5 backdrop-blur-[1px] border border-white/15 shadow-md hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-orange-400/40 dark:bg-white/5/50 dark:border-white/10 dark:hover:bg-white/10"
             >
@@ -192,7 +188,7 @@ const UseCases = () => {
             <motion.button
               whileHover={{ scale: 1.06 }}
               whileTap={{ scale: 0.92 }}
-              onClick={() => { nextCase(); track('use_case_next', { from: activeCase }); }}
+              onClick={nextCase}
               aria-label="Próximo"
               className="absolute right-4 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full flex items-center justify-center text-slate-600 hover:text-orange-600 transition-all duration-300 z-10 bg-white/5 backdrop-blur-[1px] border border-white/15 shadow-md hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-orange-400/40 dark:bg-white/5/50 dark:border-white/10 dark:hover:bg-white/10"
             >

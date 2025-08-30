@@ -36,15 +36,12 @@ const Products = () => {
   const onThumbClick = useCallback((index) => {
     if (!emblaApi || !emblaThumbsApi) return;
     emblaApi.scrollTo(index);
-    track('product_gallery_thumb_click', { index, image: images[index]?.alt });
-  }, [emblaApi, emblaThumbsApi, images]);
+  }, [emblaApi, emblaThumbsApi]);
 
   const onSelect = useCallback(() => {
     if (!emblaApi || !emblaThumbsApi) return;
-  const snap = emblaApi.selectedScrollSnap();
-  setSelectedIndex(snap);
-  emblaThumbsApi.scrollTo(snap);
-  track('product_gallery_change', { index: snap, image: images[snap]?.alt });
+    setSelectedIndex(emblaApi.selectedScrollSnap());
+    emblaThumbsApi.scrollTo(emblaApi.selectedScrollSnap());
   }, [emblaApi, emblaThumbsApi, setSelectedIndex]);
 
   useEffect(() => {
