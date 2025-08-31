@@ -12,7 +12,7 @@ const faqItems = [
   {
     question: 'Qual é o pedido mínimo?',
     answer:
-      'Nosso pedido mínimo é de 1.000 unidades (um milheiro) para os sacos de papel multiuso. Isso nos permite oferecer o melhor preço de fábrica para você.',
+      'Nosso pedido mínimo é de 500 unidades (um pacote) para o saco de papel mono viagem 40g. Isso nos permite oferecer o melhor preço de fábrica para você.',
   },
   {
     question: 'Vocês personalizam as embalagens com minha marca?',
@@ -77,7 +77,7 @@ const Faq = () => {
                 </AccordionTrigger>
                 <AccordionContent className="px-6 pb-6 text-slate-600 text-base">
                   {item.answer
-                    .replace('1.000', '<mark>1.000</mark>')
+                    .replace('500', '<mark>500</mark>')
                     .replace('melhor preço de fábrica', '<mark>melhor preço de fábrica</mark>')
                     .replace('sem personalização', '<mark>sem personalização</mark>')
                     .replace('frete grátis', '<mark>frete grátis</mark>')
@@ -89,7 +89,7 @@ const Faq = () => {
                     .replace('WhatsApp', '<mark>WhatsApp</mark>')
                     .split(/<mark>|<\/mark>/)
                     .map((chunk, i) =>
-                      ['1.000','melhor preço de fábrica','sem personalização','frete grátis','2 a 5 dias úteis','alta gramatura','Pix, boleto e cartões','3x sem juros','Mercado Livre','WhatsApp'].includes(chunk)
+                      ['500','melhor preço de fábrica','sem personalização','frete grátis','2 a 5 dias úteis','alta gramatura','Pix, boleto e cartões','3x sem juros','Mercado Livre','WhatsApp'].includes(chunk)
                         ? <mark key={i} className="bg-orange-100 text-orange-700 rounded px-1 py-0.5">{chunk}</mark>
                         : <React.Fragment key={i}>{chunk}</React.Fragment>
                     )}

@@ -38,7 +38,7 @@ const Footer = () => {
   ];
 
   const products = [
-    { nome: 'Sacos de Papel 20cm', slug: 'sacos-papel-20cm' }
+    { nome: 'Saco de Papel Mono Viagem 1 40g (500 unid)', slug: 'sacos-papel-20cm' }
   ];
 
   const socialLinks = [

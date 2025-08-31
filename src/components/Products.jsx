@@ -72,7 +72,7 @@ const Products = () => {
           className="text-center mb-10 md:mb-14"
         >
           <h2 className="text-section-title title-accent mb-4 text-slate-800 leading-tight">
-            Saco de Papel Multiuso 20cm
+            Saco de Papel <span className="bg-gradient-to-r from-orange-600 to-orange-500 bg-clip-text text-transparent">Mono Viagem 1 40g</span>
           </h2>
           <p className="text-base sm:text-xl text-slate-600 max-w-2xl mx-auto">
             A solução perfeita para seu negócio com qualidade garantida
@@ -93,7 +93,8 @@ const Products = () => {
                         loading={index === 0 ? 'eager' : 'lazy'}
                         decoding="async"
                         alt={image.alt}
-                        className="embla__slide__img"
+                        className={`embla__slide__img ${index === 0 ? 'lg:object-contain' : ''}`}
+                        style={index === 0 ? { objectFit: 'contain' } : undefined}
                       />
                     </div>
                   ))}

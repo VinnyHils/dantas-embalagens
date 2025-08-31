@@ -10,9 +10,9 @@ export const products = [
   {
     id: 'saco-20cm',
     slug: 'sacos-papel-20cm',
-    nome: 'Saco de Papel Multiuso 20cm',
-    resumo: 'Saco kraft multiuso 20cm ideal para alimentos, festas e comércio.',
-    descricao: 'Nosso saco de papel multiuso de 20cm combina resistência, apresentação profissional e versatilidade para diferentes nichos: food service, eventos, varejo e mais.',
+  nome: 'Saco de Papel Mono Viagem 1 40 gramas (pacote 500 unidades)',
+  resumo: 'Saco kraft mono viagem 40g – pacote com 500 unidades, ideal para alimentos, festas e comércio.',
+  descricao: 'Nosso saco de papel mono viagem de 40 gramas (pacote com 500 unidades) combina resistência, apresentação profissional e versatilidade para diferentes nichos: food service, eventos, varejo e mais.',
     price: 49.90,
     currency: 'BRL',
     unit: 'milheiro',
@@ -21,7 +21,7 @@ export const products = [
     rating: { value: 4.9, count: 127 },
     freteGratisAPartir: 200,
     images: [
-      { src: heroBag, alt: 'Saco de papel multiuso 20cm destaque' },
+  { src: heroBag, alt: 'Saco de papel mono viagem 1 40 gramas pacote 500 unidades' },
       { src: sacoFesta, alt: 'Saco de papel 20cm tema festa' },
       { src: galleryBags, alt: 'Aplicações diversas do saco 20cm' },
       { src: elegantBag, alt: 'Saco de papel 20cm em uso elegante' },
@@ -36,7 +36,7 @@ export const products = [
       { label: 'Altura', value: '20cm' },
       { label: 'Material', value: 'Papel Kraft' },
       { label: 'Cor', value: 'Natural' },
-      { label: 'Quantidade', value: '1.000 unidades' },
+  { label: 'Quantidade', value: '500 unidades (pacote)' },
       { label: 'Peso', value: '80g/m²' },
       { label: 'Formato', value: 'Fundo reto selado' }
     ],
@@ -49,8 +49,8 @@ export const products = [
       'Entrega rápida'
     ],
     seo: {
-      title: 'Saco de Papel Multiuso 20cm | Dantas Embalagens',
-      description: 'Compre saco de papel kraft multiuso 20cm direto da fábrica. Resistência, qualidade e ótimo custo para seu negócio.',
+      title: 'Saco de Papel Mono Viagem 40g (500 unid) | Dantas Embalagens',
+      description: 'Compre saco de papel mono viagem 40 gramas pacote com 500 unidades direto da fábrica. Resistência, qualidade e ótimo custo para seu negócio.',
       ogImage: heroBag
     },
     schema: { sku: 'SACO-20CM', gtin13: '000000000020' }
@@ -80,7 +80,7 @@ export const products = [
       { label: 'Altura', value: '25cm' },
       { label: 'Material', value: 'Papel Kraft' },
       { label: 'Cor', value: 'Natural' },
-      { label: 'Quantidade', value: '1.000 unidades' },
+  { label: 'Quantidade', value: '500 unidades' },
       { label: 'Peso', value: '80g/m²' }
     ],
     benefits: [

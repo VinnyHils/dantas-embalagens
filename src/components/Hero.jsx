@@ -70,11 +70,16 @@ const Hero = () => {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.3 }}
-              className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 leading-tight text-slate-800"
+              className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight text-slate-800"
             >
+              {/* Mantém estilo original: primeira parte neutra, segunda parte em gradiente */}
               Saco de Papel{' '}
               <span className="bg-gradient-to-r from-orange-600 to-orange-500 bg-clip-text text-transparent">
-                Multiuso 20cm
+                Mono Viagem 1 40 gramas
+              </span>
+              {/* Subtítulo menor destacado como linha separada */}
+              <span className="block mt-3 text-sm font-semibold tracking-wide uppercase text-orange-600">
+                Pacote com 500 unidades
               </span>
             </motion.h1>
 
@@ -152,7 +157,7 @@ const Hero = () => {
               >
                 <img
                   src={heroBag}
-                  alt="Saco de Papel Multiuso 20cm"
+                  alt="Saco de papel mono viagem 1 40 gramas pacote 500 unidades"
                   className="w-full h-96 lg:h-[600px] object-contain group-hover:scale-105 transition-transform duration-700"
                 />
                 <div className="absolute inset-0" />

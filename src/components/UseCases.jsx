@@ -66,7 +66,7 @@ const UseCases = () => {
             Infinitas Possibilidades de Uso
           </h2>
           <p className="text-xl text-slate-600 max-w-3xl mx-auto">
-            Descubra como nosso Saco de Papel Multiuso 20cm pode transformar seu negócio
+            Descubra como nosso Saco de Papel Mono Viagem 1 pode transformar seu negócio
           </p>
         </motion.div>
 
