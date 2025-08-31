@@ -65,18 +65,13 @@ export default function ProductDetailPage() {
           </div>
         </div>
         <div>
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight text-slate-800 mb-4">
-            {/* Divide nome em duas partes para aplicar gradiente similar ao Hero */}
-            {nome.split(' ').slice(0,4).join(' ')}{' '}
-            <span className="bg-gradient-to-r from-orange-600 to-orange-500 bg-clip-text text-transparent">
-              {nome.split(' ').slice(4).join(' ')}
-            </span>
-            {nome.includes('500') && (
-              <span className="block mt-3 text-xs font-semibold tracking-wide uppercase text-orange-600">
-                Pacote com 500 unidades
-              </span>
-            )}
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight text-slate-800 mb-2">
+            {/* Título principal sem especificações numéricas */}
+            {nome.replace(/40\s*gramas.*$/i,'').trim()}
           </h1>
+          <div className="text-sm font-semibold tracking-wide text-orange-600 mb-6">
+            40G • PACOTE COM 500 UNIDADES
+          </div>
           <p className="text-slate-600 leading-relaxed mb-6">{descricao}</p>
           <div className="flex items-center gap-3 mb-4">
             <div className="flex text-orange-500">
