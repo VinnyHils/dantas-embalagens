@@ -106,7 +106,7 @@ export default function ProductDetailPage() {
           <h2 className="font-semibold text-slate-800 mb-3">Especificações</h2>
           <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2 text-sm mb-8">
             {specifications.map(s => (
-              <li key={s.label} className="flex justify-between border-b border-dashed border-slate-200 py-1 last:border-0">
+              <li key={s.label} className="flex justify-between border-b border-dashed border-slate-200 py-1">
                 <span className="text-slate-600">{s.label}</span>
                 <span className="font-medium text-slate-800">{s.value}</span>
               </li>
