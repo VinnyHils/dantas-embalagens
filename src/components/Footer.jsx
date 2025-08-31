@@ -38,7 +38,7 @@ const Footer = () => {
   ];
 
   const products = [
-    { nome: 'Saco de Papel Mono Viagem 1 40g (500 unid)', slug: 'sacos-papel-20cm' }
+    { nome: 'Saco de Papel Mono Viagem 1 <span class="block leading-snug text-[11px] text-gray-400 font-medium mt-0.5">40G • PACOTE COM 500 UNIDADES</span>', slug: 'sacos-papel-20cm', rich: true }
   ];
 
   const socialLinks = [
@@ -135,10 +135,9 @@ const Footer = () => {
                 <li key={product.slug}>
                   <Link
                     to={`/produto/${product.slug}`}
-                    className="footer-nav-link text-gray-300 text-sm"
-                  >
-                    {product.nome}
-                  </Link>
+                    className="footer-nav-link text-gray-300 text-sm leading-tight"
+                    dangerouslySetInnerHTML={{ __html: product.nome }}
+                  />
                 </li>
               ))}
             </ul>
