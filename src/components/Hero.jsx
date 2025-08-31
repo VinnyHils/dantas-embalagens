@@ -72,14 +72,12 @@ const Hero = () => {
               transition={{ duration: 0.8, delay: 0.3 }}
               className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight text-slate-800"
             >
-              {/* Mantém estilo original: primeira parte neutra, segunda parte em gradiente */}
               Saco de Papel{' '}
               <span className="bg-gradient-to-r from-orange-600 to-orange-500 bg-clip-text text-transparent">
-                Mono Viagem 1 40 gramas
+                Mono Viagem 1
               </span>
-              {/* Subtítulo menor destacado como linha separada */}
-              <span className="block mt-3 text-sm font-semibold tracking-wide uppercase text-orange-600">
-                Pacote com 500 unidades
+              <span className="block mt-3 text-[13px] sm:text-sm font-semibold tracking-wide uppercase text-orange-600">
+                40 gramas · Pacote com 500 unidades
               </span>
             </motion.h1>
 
