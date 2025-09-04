@@ -107,23 +107,29 @@ export default function Seo() {
       document.head.appendChild(script);
     };
 
-    // Organization
+    // Organization com dados legais (CNPJ)
     pushJsonLd({
       '@context': 'https://schema.org',
       '@type': 'Organization',
       name: 'Dantas Embalagens',
+      legalName: 'Dantas Embalagens',
+      taxID: '37.566.147/0001-53',
       url: SITE_BASE_URL,
       logo: SITE_BASE_URL + '/favicon.ico',
       address: {
         '@type': 'PostalAddress',
+        streetAddress: 'Atravessa das Rosas, 21',
         addressLocality: 'Atibaia',
         addressRegion: 'SP',
+        postalCode: '12945-713',
         addressCountry: 'BR'
       },
       contactPoint: [{
         '@type': 'ContactPoint',
         contactType: 'customer service',
-        telephone: '+55-11-4411-2233'
+        telephone: '+55-11-4411-2233',
+        areaServed: 'BR',
+        availableLanguage: ['pt-BR']
       }]
     });
 

@@ -84,6 +84,12 @@ const Footer = () => {
                 <MapPin className="w-4 h-4 text-orange-400" />
                 <span className="text-sm">Atibaia - SP</span>
               </div>
+              {/* Dados Legais */}
+              <div className="pt-2 text-[11px] leading-relaxed text-gray-400 border-t border-slate-700/50 mt-4">
+                <p className="font-semibold text-gray-300">DANTAS EMBALAGENS</p>
+                <p>CNPJ: 37.566.147/0001-53</p>
+                <p>ATRAVESSA DAS ROSAS, 21<br/>Atibaia - SP • CEP 12945-713 • Brasil</p>
+              </div>
             </div>
           </motion.div>
 

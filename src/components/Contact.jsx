@@ -61,8 +61,8 @@ const Contact = () => {
     {
       icon: MapPin,
       title: 'Endereço',
-      info: 'Atibaia - SP',
-      description: 'Região da Grande São Paulo'
+  info: 'Atravessa das Rosas, 21 - Atibaia/SP',
+  description: 'CEP 12945-713 • Brasil'
     },
     {
       icon: Clock,
@@ -196,6 +196,11 @@ const Contact = () => {
                   <p className="text-slate-500 text-xs sm:text-sm leading-relaxed">{item.description}</p>
                 </motion.div>
               ))}
+            </div>
+            <div className="mt-6 text-xs text-slate-500 bg-slate-50 rounded-xl p-4 ring-1 ring-slate-200/60">
+              <p className="font-semibold text-slate-700 mb-1">Dados Legais</p>
+              <p>Dantas Embalagens • CNPJ 37.566.147/0001-53</p>
+              <p>Atravessa das Rosas, 21 – Atibaia/SP – CEP 12945-713</p>
             </div>
           </motion.div>
 
